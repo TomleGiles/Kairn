@@ -1,0 +1,132 @@
+{{- $fn := include "kairn.fullname" . -}}
+{{- if .Values.serviceAccount.create }}
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ $fn }}
+  labels: {{- include "kairn.labels" . | nindent 4 }}
+  {{- with .Values.serviceAccount.annotations }}
+  annotations: {{ toYaml . | nindent 4 }}
+  {{- end }}
+automountServiceAccountToken: false
+---
+{{- end }}
+# Migrations PostgreSQL et ClickHouse avant chaque installation / mise à jour,
+# avec le rôle propriétaire du schéma (postgres-migrate-url).
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ $fn }}-migrate
+  labels: {{- include "kairn.labels" . | nindent 4 }}
+  annotations:
+    helm.sh/hook: pre-install,pre-upgrade
+    helm.sh/hook-weight: "-5"
+    helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
+spec:
+  backoffLimit: 3
+  ttlSecondsAfterFinished: 3600
+  template:
+    metadata:
+      labels:
+        {{- include "kairn.selector" (dict "root" . "component" "migrate") | nindent 8 }}
+    spec:
+      restartPolicy: OnFailure
+      automountServiceAccountToken: false
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets: {{ toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext: {{ toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: migrate
+          image: {{ include "kairn.image" (dict "root" . "name" "api") }}
+          args: ["migrate"]
+          securityContext: {{ toYaml .Values.securityContext | nindent 12 }}
+          env:
+            - {name: KAIRN_LOG_FORMAT, value: json}
+            - {name: KAIRN_CLICKHOUSE_ADDR, value: {{ .Values.clickhouse.url | quote }}}
+            - {name: KAIRN_CLICKHOUSE_DB, value: {{ .Values.clickhouse.database | quote }}}
+            - {name: KAIRN_CLICKHOUSE_USER, value: {{ .Values.clickhouse.user | quote }}}
+            {{- include "kairn.secretEnv" (dict "root" . "env" "KAIRN_POSTGRES_MIGRATE_URL" "key" "postgres-migrate-url") | nindent 12 }}
+            {{- include "kairn.secretEnv" (dict "root" . "env" "KAIRN_CLICKHOUSE_PASSWORD" "key" "clickhouse-password") | nindent 12 }}
+          resources:
+            requests: {cpu: 50m, memory: 64Mi}
+            limits: {memory: 256Mi}
+---
+{{- if .Values.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ $fn }}
+  labels: {{- include "kairn.labels" . | nindent 4 }}
+  annotations:
+    {{- with .Values.ingress.annotations }}{{ toYaml . | nindent 4 }}{{ end }}
+spec:
+  ingressClassName: {{ .Values.ingress.className }}
+  {{- if .Values.ingress.tls.enabled }}
+  tls:
+    - hosts: [{{ .Values.ingress.host | quote }}]
+      secretName: {{ .Values.ingress.tls.secretName }}
+  {{- end }}
+  rules:
+    - host: {{ .Values.ingress.host | quote }}
+      http:
+        paths:
+          - {path: /api, pathType: Prefix, backend: {service: {name: {{ $fn }}-api, port: {name: http}}}}
+          - {path: /scim, pathType: Prefix, backend: {service: {name: {{ $fn }}-api, port: {name: http}}}}
+          - {path: /status, pathType: Prefix, backend: {service: {name: {{ $fn }}-api, port: {name: http}}}}
+          - path: /ingest
+            pathType: Prefix
+            backend: {service: {name: {{ printf "%s-%s" $fn (ternary "api" "ingest-gateway" (eq .Values.mode "single-node")) }}, port: {name: http}}}
+          {{- if .Values.ai.enabled }}
+          - {path: /mcp, pathType: Prefix, backend: {service: {name: {{ $fn }}-ai, port: {name: http}}}}
+          - {path: /.well-known/oauth-protected-resource, pathType: Prefix, backend: {service: {name: {{ $fn }}-ai, port: {name: http}}}}
+          {{- end }}
+          - {path: /, pathType: Prefix, backend: {service: {name: {{ $fn }}-web, port: {name: http}}}}
+---
+{{- end }}
+{{- if .Values.networkPolicy.enabled }}
+# Par défaut, aucun trafic entrant ; seuls les flux nécessaires sont ouverts.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ $fn }}-default-deny
+  labels: {{- include "kairn.labels" . | nindent 4 }}
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  policyTypes: [Ingress]
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ $fn }}-public
+  labels: {{- include "kairn.labels" . | nindent 4 }}
+spec:
+  podSelector:
+    matchExpressions:
+      - {key: app.kubernetes.io/instance, operator: In, values: [{{ .Release.Name }}]}
+      - {key: app.kubernetes.io/component, operator: In, values: [web, api, ingest-gateway, ai]}
+  policyTypes: [Ingress]
+  ingress:
+    - ports:
+        - {port: http}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ $fn }}-internal
+  labels: {{- include "kairn.labels" . | nindent 4 }}
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  policyTypes: [Ingress]
+  ingress:
+    # Appels internes entre composants (API ↔ analytics/ai, workers → services Python, sondes → passerelle).
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/instance: {{ .Release.Name }}
+---
+{{- end }}

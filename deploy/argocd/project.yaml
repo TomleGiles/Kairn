@@ -1,0 +1,17 @@
+# Projet Argo CD de la plateforme SaaS Kairn : seules les sources et destinations listées sont autorisées.
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: kairn
+  namespace: argocd
+spec:
+  description: Plateforme SaaS Kairn
+  sourceRepos:
+    - https://github.com/kairn-io/kairn.git
+  destinations:
+    - {server: https://kubernetes.default.svc, namespace: kairn-staging}
+    - {server: https://kubernetes.default.svc, namespace: kairn}
+  clusterResourceWhitelist: []
+  namespaceResourceWhitelist:
+    - {group: "*", kind: "*"}
+  orphanedResources: {warn: true}

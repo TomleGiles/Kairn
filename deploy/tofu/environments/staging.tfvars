@@ -1,0 +1,10 @@
+environment      = "staging"
+region           = "GRA11"
+system_flavor    = "b3-8"
+system_nodes     = 2
+system_nodes_max = 4
+data_flavor      = "b3-16"
+data_nodes       = 1
+postgres_plan    = "essential"
+postgres_flavor  = "db1-7"
+postgres_nodes   = 1

@@ -1,0 +1,17 @@
+# Valeurs de test (CI) : mode distribué complet, sondes multi-régions.
+publicURL: https://kairn.test.example
+ingress:
+  host: kairn.test.example
+s3:
+  endpoint: s3.gra.io.cloud.ovh.net
+  accessKey: test
+probes:
+  enabled: true
+  regions: [eu-west-gra, eu-central-waw]
+config:
+  oidc:
+    issuer: https://sso.test.example/realms/kairn
+  smtp:
+    addr: smtp.test.example:587
+vault:
+  addr: https://vault.test.example

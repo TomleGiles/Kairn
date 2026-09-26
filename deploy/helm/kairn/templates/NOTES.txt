@@ -1,0 +1,13 @@
+Kairn {{ .Chart.AppVersion }} déployé en mode {{ .Values.mode }}.
+
+Application : {{ .Values.publicURL }}
+API        : {{ include "kairn.apiURL" . }}/api/v1/docs
+
+Vérifications :
+  kubectl -n {{ .Release.Namespace }} get pods -l app.kubernetes.io/instance={{ .Release.Name }}
+  kubectl -n {{ .Release.Namespace }} logs job/{{ include "kairn.fullname" . }}-migrate
+
+Rappels de sécurité :
+  - le secret « {{ .Values.secrets.existingSecret }} » doit fournir les clés listées dans values.yaml ;
+  - postgres-url doit utiliser le rôle applicatif SANS BYPASSRLS (voir docs/adr/0002-isolation-multi-tenant-rls.md) ;
+  - aucun appel LLM hors UE n'a lieu sans autorisation explicite de chaque organisation.

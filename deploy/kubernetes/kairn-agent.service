@@ -1,0 +1,25 @@
+# Unité systemd de l'agent Kairn pour les hôtes et VM (hors Kubernetes).
+#   install -m 0755 kairn-agent /usr/local/bin/ && install -m 0600 token /etc/kairn/agent-token
+#   systemctl enable --now kairn-agent
+[Unit]
+Description=Kairn agent (inventaire et métriques de l'hôte)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Environment=KAIRN_AGENT_GATEWAY=https://kairn.example.com
+Environment=KAIRN_AGENT_TOKEN_FILE=%d/agent-token
+ExecStart=/usr/local/bin/kairn-agent --label site=datacenter-1
+DynamicUser=yes
+LoadCredential=agent-token:/etc/kairn/agent-token
+Restart=always
+RestartSec=10
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+CapabilityBoundingSet=
+MemoryMax=64M
+
+[Install]
+WantedBy=multi-user.target

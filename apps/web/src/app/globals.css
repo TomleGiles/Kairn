@@ -1,0 +1,120 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Jetons de design : contraste AA vérifié en clair et en sombre (RGAA / WCAG 2.1 AA). */
+:root {
+  --background: #f7f8fa;
+  --surface: #ffffff;
+  --surface-2: #f1f3f6;
+  --foreground: #111827;
+  --muted: #4b5563;
+  --subtle: #6b7280;
+  --border: #e3e6eb;
+  --ring: #0f766e;
+  --brand: #0f766e;
+  --brand-fg: #ffffff;
+  --brand-soft: #e6f4f2;
+  --danger: #b42318;
+  --danger-soft: #fdecea;
+  --warning: #9a5b00;
+  --warning-soft: #fff4e0;
+  --success: #067647;
+  --success-soft: #e7f6ee;
+  --info: #1d4ed8;
+  --info-soft: #e8efff;
+  --chart-1: #0f766e;
+  --chart-2: #2563eb;
+  --chart-3: #d97706;
+  --chart-4: #7c3aed;
+  --chart-5: #db2777;
+  --chart-6: #0891b2;
+  --chart-7: #65a30d;
+  --chart-8: #64748b;
+}
+
+.dark {
+  --background: #0b0f14;
+  --surface: #121821;
+  --surface-2: #19212c;
+  --foreground: #e6e9ee;
+  --muted: #a7b0bd;
+  --subtle: #8b95a3;
+  --border: #253041;
+  --ring: #2dd4bf;
+  --brand: #2dd4bf;
+  --brand-fg: #04201c;
+  --brand-soft: #0f2b28;
+  --danger: #f97066;
+  --danger-soft: #3a1512;
+  --warning: #fdb022;
+  --warning-soft: #33240a;
+  --success: #47cd89;
+  --success-soft: #0f2a1d;
+  --info: #84adff;
+  --info-soft: #14203c;
+  --chart-1: #2dd4bf;
+  --chart-2: #60a5fa;
+  --chart-3: #fbbf24;
+  --chart-4: #a78bfa;
+  --chart-5: #f472b6;
+  --chart-6: #22d3ee;
+  --chart-7: #a3e635;
+  --chart-8: #94a3b8;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-subtle: var(--subtle);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+  --color-brand: var(--brand);
+  --color-brand-fg: var(--brand-fg);
+  --color-brand-soft: var(--brand-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-info: var(--info);
+  --color-info-soft: var(--info-soft);
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+html {
+  color-scheme: light;
+}
+html.dark {
+  color-scheme: dark;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

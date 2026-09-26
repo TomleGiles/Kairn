@@ -1,0 +1,45 @@
+# Agent Kairn en DaemonSet (nœuds sans pile de métriques). Aucun privilège :
+# lecture seule du système de fichiers de l'hôte (/proc, /sys, identifiant machine).
+#   kubectl -n kairn-system create secret generic kairn-agent --from-literal=token=<jeton du connecteur agent>
+#   kubectl apply -f kairn-agent.yaml
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: kairn-agent
+  namespace: kairn-system
+  labels: {app.kubernetes.io/name: kairn-agent}
+spec:
+  selector:
+    matchLabels: {app.kubernetes.io/name: kairn-agent}
+  template:
+    metadata:
+      labels: {app.kubernetes.io/name: kairn-agent}
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65532
+        seccompProfile: {type: RuntimeDefault}
+      tolerations:
+        - operator: Exists
+      containers:
+        - name: agent
+          image: registry.kairn.io/kairn/agent:0.1.0
+          args: ["--host-root", "/host", "--label", "site=datacenter-1"]
+          env:
+            - {name: KAIRN_AGENT_GATEWAY, value: "https://kairn.example.com"}
+            - {name: KAIRN_AGENT_TOKEN_FILE, value: /var/run/kairn/token}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: {drop: [ALL]}
+          resources:
+            requests: {cpu: 10m, memory: 32Mi}
+            limits: {memory: 64Mi}
+          volumeMounts:
+            - {name: host, mountPath: /host, readOnly: true, mountPropagation: HostToContainer}
+            - {name: token, mountPath: /var/run/kairn, readOnly: true}
+      volumes:
+        - {name: host, hostPath: {path: /}}
+        - name: token
+          secret: {secretName: kairn-agent, items: [{key: token, path: token}]}

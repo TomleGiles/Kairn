@@ -1,0 +1,265 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  go:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with: {go-version-file: go.mod}
+      - name: gofmt
+        run: test -z "$(gofmt -l agent cli connectors migrations pkg services | tee /dev/stderr)"
+      - run: go vet ./...
+      - uses: golangci/golangci-lint-action@v8
+        with: {version: latest}
+      - name: Tests unitaires
+        run: go test -race -count=1 ./...
+      - name: Vulnérabilités des dépendances
+        run: go run golang.org/x/vuln/cmd/govulncheck@latest ./...
+
+  terraform-provider:
+    runs-on: ubuntu-latest
+    defaults:
+      run: {working-directory: terraform-provider}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with: {go-version-file: terraform-provider/go.mod, cache-dependency-path: terraform-provider/go.sum}
+      - name: gofmt
+        run: test -z "$(gofmt -l . | tee /dev/stderr)"
+      - run: go vet ./...
+      - uses: golangci/golangci-lint-action@v8
+        with: {version: latest, working-directory: terraform-provider, args: --config ../.golangci.yml}
+      - name: Tests (API Kairn simulée)
+        run: go test -race -count=1 -cover ./...
+      - name: Vulnérabilités des dépendances
+        run: go run golang.org/x/vuln/cmd/govulncheck@latest ./...
+      - uses: opentofu/setup-opentofu@v1
+      - name: Validation de l'exemple avec le provider compilé
+        run: |
+          go build -o "$RUNNER_TEMP/tfprov/terraform-provider-kairn" .
+          cat > "$HOME/.tofurc" <<EOF
+          provider_installation {
+            dev_overrides { "kairn-io/kairn" = "$RUNNER_TEMP/tfprov" }
+            direct {}
+          }
+          EOF
+          tofu -chdir=examples validate
+
+  integration:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env: {POSTGRES_PASSWORD: postgres}
+        ports: ["5432:5432"]
+        options: --health-cmd "pg_isready -U postgres" --health-interval 5s --health-retries 20
+      clickhouse:
+        image: clickhouse/clickhouse-server:24.8-alpine
+        env: {CLICKHOUSE_DB: kairn, CLICKHOUSE_USER: kairn, CLICKHOUSE_PASSWORD: kairn, CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: "1"}
+        ports: ["8123:8123"]
+    env:
+      PGPASSWORD: postgres
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with: {go-version-file: go.mod}
+      - name: Rôles et base (propriétaire BYPASSRLS, applicatif soumis à la RLS)
+        run: |
+          psql -h localhost -U postgres -v ON_ERROR_STOP=1 -v owner_password=owner -v app_password=app -v dbname=kairn_test -f deploy/postgres/init-roles.sql
+      - name: Migrations (rôle propriétaire)
+        env:
+          KAIRN_POSTGRES_MIGRATE_URL: postgres://kairn_owner:owner@localhost:5432/kairn_test?sslmode=disable
+          KAIRN_CLICKHOUSE_ADDR: http://localhost:8123
+          KAIRN_CLICKHOUSE_DB: kairn
+          KAIRN_CLICKHOUSE_USER: kairn
+          KAIRN_CLICKHOUSE_PASSWORD: kairn
+        run: go run ./services/api migrate
+      - name: Tous les tests avec PostgreSQL (RLS) et ClickHouse, couverture globale
+        env:
+          KAIRN_TEST_PG_DSN: postgres://kairn_app:app@localhost:5432/kairn_test?sslmode=disable
+          KAIRN_TEST_CLICKHOUSE_URL: http://localhost:8123
+          KAIRN_TEST_CLICKHOUSE_DB: kairn
+          KAIRN_TEST_CLICKHOUSE_USER: kairn
+          KAIRN_TEST_CLICKHOUSE_PASSWORD: kairn
+        # -p 1 : les tests API vident les organisations entre deux tests.
+        run: go test -p 1 -count=1 -coverpkg=./... -coverprofile=coverage.out ./...
+      - name: Seuils de couverture (CLAUDE.md §10)
+        run: scripts/coverage.sh coverage.out
+      - uses: actions/upload-artifact@v4
+        with: {name: coverage, path: coverage.out}
+
+  python:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        service: [analytics, ai]
+    defaults:
+      run: {working-directory: "services/${{ matrix.service }}"}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: uv pip install --system -e ".[dev]"
+      - run: ruff check . && ruff format --check .
+      - run: mypy --strict kairn_${{ matrix.service }}
+      - run: pytest -q
+      - run: uvx pip-audit --skip-editable
+
+  ai-evals:
+    # Jeu d'évaluation de l'assistant (chiffres vérifiés contre les outils) : branche principale uniquement.
+    if: github.ref == 'refs/heads/main'
+    needs: [go, python]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with: {go-version-file: go.mod}
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install -e "services/ai[dev]"
+      - name: Instance de démonstration
+        run: |
+          KAIRN_MODE=demo go run ./services/api > api.log 2>&1 &
+          for i in $(seq 1 60); do curl -sf localhost:8080/healthz && break; sleep 2; done
+      - name: Évaluation
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          KAIRN_API_URL: http://localhost:8080
+          KAIRN_EVAL_REQUIRED: "1"
+        run: python services/ai/evals/run.py
+
+  web:
+    runs-on: ubuntu-latest
+    defaults:
+      run: {working-directory: apps/web}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: 22, cache: npm, cache-dependency-path: apps/web/package-lock.json}
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - name: Client API à jour
+        run: npm run gen && git diff --exit-code src/lib/api/schema.d.ts
+      - run: npm run build
+      - run: npm audit --omit=dev --audit-level=high
+
+  site:
+    runs-on: ubuntu-latest
+    defaults:
+      run: {working-directory: apps/site}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: 22, cache: npm, cache-dependency-path: apps/site/package-lock.json}
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run build
+      - name: Revue du site (accessibilité WCAG 2.1 AA, débordements, erreurs)
+        run: |
+          (cd out && python3 -m http.server 3200 --bind 127.0.0.1 &) ; sleep 1
+          cd ../../test/e2e && npm ci && npx playwright install --with-deps chromium && mkdir -p site-review && node site-review.mjs http://127.0.0.1:3200/ site-review
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: {name: site-review, path: test/e2e/site-review}
+
+  e2e:
+    needs: [web]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with: {go-version-file: go.mod}
+      - uses: actions/setup-node@v4
+        with: {node-version: 22}
+      - name: Démo (API + web)
+        run: |
+          KAIRN_MODE=demo go run ./services/api > api.log 2>&1 &
+          (cd apps/docs && npm ci && npm test && node build.mjs)
+          (cd apps/web && npm ci && npm run build && npm run start > ../../web.log 2>&1 &)
+          for i in $(seq 1 90); do curl -sf localhost:3000/login > /dev/null && break; sleep 2; done
+      - run: cd test/e2e && npm ci && npx playwright install --with-deps chromium && npx playwright test
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with: {name: playwright-report, path: test/e2e/playwright-report}
+
+  helm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: azure/setup-helm@v4
+      - run: helm lint deploy/helm/kairn --values deploy/helm/kairn/ci/test-values.yaml
+      - run: |
+          helm template kairn deploy/helm/kairn --values deploy/helm/kairn/ci/test-values.yaml > /tmp/distributed.yaml
+          helm template kairn deploy/helm/kairn --values deploy/helm/kairn/ci/single-node-values.yaml > /tmp/single.yaml
+      - uses: opentofu/setup-opentofu@v1
+      - run: cd deploy/tofu && tofu init -backend=false && tofu validate
+
+  images:
+    # Images multi-architecture, SBOM et signature (cosign, sans clé) à chaque publication.
+    if: github.event_name == 'push'
+    needs: [go, integration, python, web, helm]
+    runs-on: ubuntu-latest
+    permissions: {contents: read, packages: write, id-token: write}
+    strategy:
+      matrix:
+        include:
+          - {name: api, dockerfile: deploy/docker/go.Dockerfile, args: "PKG=./services/api"}
+          - {name: ingest, dockerfile: deploy/docker/go.Dockerfile, args: "PKG=./services/ingest"}
+          - {name: cost-engine, dockerfile: deploy/docker/go.Dockerfile, args: "PKG=./services/cost-engine"}
+          - {name: notifier, dockerfile: deploy/docker/go.Dockerfile, args: "PKG=./services/notifier"}
+          - {name: agent, dockerfile: deploy/docker/go.Dockerfile, args: "PKG=./agent"}
+          - {name: cli, dockerfile: deploy/docker/go.Dockerfile, args: "PKG=./cli"}
+          - {name: analytics, dockerfile: deploy/docker/python.Dockerfile, args: "SERVICE=analytics\nMODULE=kairn_analytics.app"}
+          - {name: ai, dockerfile: deploy/docker/python.Dockerfile, args: "SERVICE=ai\nMODULE=kairn_ai.app"}
+          - {name: web, dockerfile: apps/web/Dockerfile, args: ""}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with: {registry: ghcr.io, username: "${{ github.actor }}", password: "${{ secrets.GITHUB_TOKEN }}"}
+      - id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ github.repository_owner }}/kairn-${{ matrix.name }}
+          tags: |
+            type=ref,event=branch
+            type=semver,pattern={{version}}
+            type=sha
+      - id: build
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ${{ matrix.dockerfile }}
+          build-args: |
+            ${{ matrix.args }}
+            VERSION=${{ github.ref_name }}
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          sbom: true
+          provenance: mode=max
+      - uses: aquasecurity/trivy-action@0.28.0
+        with:
+          image-ref: ghcr.io/${{ github.repository_owner }}/kairn-${{ matrix.name }}@${{ steps.build.outputs.digest }}
+          severity: CRITICAL,HIGH
+          exit-code: "1"
+          ignore-unfixed: true
+      - uses: sigstore/cosign-installer@v3
+      - run: cosign sign --yes ghcr.io/${{ github.repository_owner }}/kairn-${{ matrix.name }}@${{ steps.build.outputs.digest }}

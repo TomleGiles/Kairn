@@ -1,0 +1,236 @@
+# Pile locale complète de Kairn (make dev).
+#   make env    # génère .env (secrets aléatoires, une seule fois)
+#   make dev    # infrastructure + services Kairn
+# Web : http://localhost:3000 · API : http://localhost:8080/api/v1/docs · Keycloak : http://localhost:8180
+# Mailpit (e-mails) : http://localhost:8025 · MinIO : http://localhost:9001
+name: kairn
+
+x-kairn-env: &kairn-env
+  KAIRN_MODE: production
+  KAIRN_LOG_FORMAT: text
+  KAIRN_PUBLIC_URL: http://localhost:3000
+  KAIRN_API_URL: http://localhost:8080
+  KAIRN_POSTGRES_URL: postgres://kairn_app:${KAIRN_APP_PASSWORD:?run make env}@postgres:5432/kairn?sslmode=disable
+  KAIRN_CLICKHOUSE_ADDR: http://clickhouse:8123
+  KAIRN_CLICKHOUSE_DB: kairn
+  KAIRN_CLICKHOUSE_USER: kairn
+  KAIRN_CLICKHOUSE_PASSWORD: ${KAIRN_CLICKHOUSE_PASSWORD:?run make env}
+  KAIRN_NATS_URL: nats://nats:4222
+  KAIRN_REDIS_URL: redis://valkey:6379
+  KAIRN_S3_ENDPOINT: minio:9000
+  KAIRN_S3_SSL: "false"
+  KAIRN_S3_BUCKET: kairn
+  KAIRN_S3_ACCESS_KEY: kairn
+  KAIRN_S3_SECRET_KEY: ${KAIRN_S3_SECRET_KEY:?run make env}
+  KAIRN_SESSION_SECRET: ${KAIRN_SESSION_SECRET:?run make env}
+  KAIRN_SERVICE_TOKEN: ${KAIRN_SERVICE_TOKEN:?run make env}
+  KAIRN_KEK: ${KAIRN_KEK:?run make env}
+  # SSO Keycloak (facultatif en local) : ajouter « 127.0.0.1 keycloak » au fichier hosts,
+  # puis KAIRN_OIDC_ISSUER=http://keycloak:8180/realms/kairn dans .env.
+  KAIRN_OIDC_ISSUER: ${KAIRN_OIDC_ISSUER:-}
+  KAIRN_OIDC_CLIENT_ID: kairn
+  KAIRN_OIDC_CLIENT_SECRET: kairn-dev-secret
+  KAIRN_DEV_LOGIN: "true"
+  KAIRN_AI_URL: http://ai:8091
+  KAIRN_ANALYTICS_URL: http://analytics:8090
+  KAIRN_SMTP_ADDR: mailpit:1025
+  KAIRN_REGION: eu-west-local
+  KAIRN_TRUSTED_PROXIES: 172.16.0.0/12 # réseau docker : le conteneur web relaie les requêtes
+  KAIRN_PRICE_IMPORT: ovh,scaleway,outscale # grilles publiques (accès sortant requis ; « none » pour désactiver)
+
+x-go: &go
+  build:
+    context: .
+    dockerfile: deploy/docker/go.Dockerfile
+  restart: unless-stopped
+  depends_on:
+    migrate:
+      condition: service_completed_successfully
+    nats:
+      condition: service_started
+
+services:
+  # ------------------------------------------------------------------ infrastructure
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?run make env}
+      KAIRN_OWNER_PASSWORD: ${KAIRN_OWNER_PASSWORD:?run make env}
+      KAIRN_APP_PASSWORD: ${KAIRN_APP_PASSWORD:?run make env}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./deploy/postgres/init-roles.sql:/kairn/init-roles.sql:ro
+      - ./deploy/postgres/docker-init.sh:/docker-entrypoint-initdb.d/10-kairn.sh:ro
+    ports: ["127.0.0.1:5432:5432"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d kairn"]
+      interval: 5s
+      retries: 20
+
+  clickhouse:
+    image: clickhouse/clickhouse-server:24.8-alpine
+    environment:
+      CLICKHOUSE_DB: kairn
+      CLICKHOUSE_USER: kairn
+      CLICKHOUSE_PASSWORD: ${KAIRN_CLICKHOUSE_PASSWORD:?run make env}
+      CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: "1"
+    volumes: [chdata:/var/lib/clickhouse]
+    ports: ["127.0.0.1:8123:8123"]
+    ulimits:
+      nofile: {soft: 262144, hard: 262144}
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8123/ping || exit 1"]
+      interval: 5s
+      retries: 30
+
+  nats:
+    image: nats:2.10-alpine
+    command: ["-js", "-sd", "/data", "-m", "8222"]
+    volumes: [natsdata:/data]
+    ports: ["127.0.0.1:4222:4222"]
+
+  valkey:
+    image: valkey/valkey:8-alpine
+    ports: ["127.0.0.1:6379:6379"]
+
+  minio:
+    image: minio/minio:latest
+    command: ["server", "/data", "--console-address", ":9001"]
+    environment:
+      MINIO_ROOT_USER: kairn
+      MINIO_ROOT_PASSWORD: ${KAIRN_S3_SECRET_KEY:?run make env}
+    volumes: [miniodata:/data]
+    ports: ["127.0.0.1:9000:9000", "127.0.0.1:9001:9001"]
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.0
+    command: ["start-dev", "--import-realm", "--http-port=8180"]
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:?run make env}
+    volumes: ["./deploy/keycloak:/opt/keycloak/data/import:ro"]
+    ports: ["127.0.0.1:8180:8180"]
+
+  mailpit:
+    image: axllent/mailpit:latest
+    ports: ["127.0.0.1:8025:8025"]
+
+  # ------------------------------------------------------------------ Kairn
+  migrate:
+    build:
+      context: .
+      dockerfile: deploy/docker/go.Dockerfile
+      args: {PKG: ./services/api, BIN: kairn-api}
+    command: ["migrate"]
+    environment:
+      <<: *kairn-env
+      KAIRN_POSTGRES_MIGRATE_URL: postgres://kairn_owner:${KAIRN_OWNER_PASSWORD:?run make env}@postgres:5432/kairn?sslmode=disable
+    depends_on:
+      postgres: {condition: service_healthy}
+      clickhouse: {condition: service_healthy}
+
+  api:
+    <<: *go
+    build:
+      context: .
+      dockerfile: deploy/docker/go.Dockerfile
+      args: {PKG: ./services/api, BIN: kairn-api}
+    environment: *kairn-env
+    ports: ["127.0.0.1:8080:8080"]
+
+  ingest-gateway:
+    <<: *go
+    build:
+      context: .
+      dockerfile: deploy/docker/go.Dockerfile
+      args: {PKG: ./services/ingest, BIN: kairn-ingest}
+    command: ["gateway"]
+    environment: *kairn-env
+    ports: ["127.0.0.1:8081:8080"]
+
+  ingest-worker:
+    <<: *go
+    build:
+      context: .
+      dockerfile: deploy/docker/go.Dockerfile
+      args: {PKG: ./services/ingest, BIN: kairn-ingest}
+    command: ["worker"]
+    environment: *kairn-env
+
+  scheduler:
+    <<: *go
+    build:
+      context: .
+      dockerfile: deploy/docker/go.Dockerfile
+      args: {PKG: ./services/ingest, BIN: kairn-ingest}
+    command: ["scheduler"]
+    environment: *kairn-env
+
+  probe:
+    build:
+      context: .
+      dockerfile: deploy/docker/go.Dockerfile
+      args: {PKG: ./services/ingest, BIN: kairn-ingest}
+    command: ["probe"]
+    restart: unless-stopped
+    environment:
+      <<: *kairn-env
+      KAIRN_GATEWAY_URL: http://ingest-gateway:8080
+      KAIRN_PROBE_ALLOW_PRIVATE: "true" # développement : autorise les cibles du réseau local
+
+  cost-engine:
+    <<: *go
+    build:
+      context: .
+      dockerfile: deploy/docker/go.Dockerfile
+      args: {PKG: ./services/cost-engine, BIN: kairn-cost-engine}
+    environment: *kairn-env
+
+  notifier:
+    <<: *go
+    build:
+      context: .
+      dockerfile: deploy/docker/go.Dockerfile
+      args: {PKG: ./services/notifier, BIN: kairn-notifier}
+    environment: *kairn-env
+
+  analytics:
+    build:
+      context: .
+      dockerfile: deploy/docker/python.Dockerfile
+      args: {SERVICE: analytics, MODULE: kairn_analytics.app}
+    restart: unless-stopped
+    environment:
+      KAIRN_API_URL: http://api:8080
+      KAIRN_SERVICE_TOKEN: ${KAIRN_SERVICE_TOKEN:?run make env}
+      KAIRN_AI_URL: http://ai:8091
+
+  ai:
+    build:
+      context: .
+      dockerfile: deploy/docker/python.Dockerfile
+      args: {SERVICE: ai, MODULE: kairn_ai.app}
+    restart: unless-stopped
+    environment:
+      KAIRN_API_URL: http://api:8080
+      KAIRN_SERVICE_TOKEN: ${KAIRN_SERVICE_TOKEN:?run make env}
+      KAIRN_PUBLIC_URL: http://localhost:3000
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      MISTRAL_API_KEY: ${MISTRAL_API_KEY:-}
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+      args: {KAIRN_API_URL: "http://api:8080"}
+    restart: unless-stopped
+    environment:
+      KAIRN_API_URL: http://api:8080
+    ports: ["127.0.0.1:3000:3000"]
+    depends_on: [api]
+
+volumes:
+  pgdata:
+  chdata:
+  natsdata:
+  miniodata:

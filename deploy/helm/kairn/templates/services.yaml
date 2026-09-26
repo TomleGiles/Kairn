@@ -1,0 +1,101 @@
+{{- $fn := include "kairn.fullname" . -}}
+{{- $single := eq .Values.mode "single-node" -}}
+{{- if not (has .Values.mode (list "distributed" "single-node")) }}
+{{- fail "mode must be distributed or single-node" }}
+{{- end }}
+{{- if and (not $single) (not .Values.s3.endpoint) }}
+{{- fail "s3.endpoint is required in distributed mode (reports and exports are shared between services)" }}
+{{- end }}
+# ---------------------------------------------------------------- API
+{{ include "kairn.deployment" (dict "root" . "component" "api" "image" "api" "values" .Values.api "port" 8080 "env" "go"
+     "replicas" (ternary 1 .Values.api.replicas $single) "writable" (ternary (list "/data") (list) (not .Values.s3.endpoint))) }}
+---
+{{ include "kairn.service" (dict "root" . "component" "api" "port" 8080) }}
+---
+{{- if and .Values.api.autoscaling.enabled (not $single) }}
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ $fn }}-api
+  labels: {{- include "kairn.labels" . | nindent 4 }}
+spec:
+  scaleTargetRef: {apiVersion: apps/v1, kind: Deployment, name: {{ $fn }}-api}
+  minReplicas: {{ .Values.api.autoscaling.minReplicas }}
+  maxReplicas: {{ .Values.api.autoscaling.maxReplicas }}
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target: {type: Utilization, averageUtilization: {{ .Values.api.autoscaling.targetCPUUtilizationPercentage }}}
+---
+{{ include "kairn.pdb" (dict "root" . "component" "api") }}
+---
+{{- end }}
+# ---------------------------------------------------------------- Application web
+{{ include "kairn.deployment" (dict "root" . "component" "web" "image" "web" "values" .Values.web "port" 3000 "env" "none" "readyPath" "/login"
+     "extraEnv" (list (dict "name" "KAIRN_API_URL" "value" (printf "http://%s-api:8080" $fn))) "writable" (list "/app/.next/cache")) }}
+---
+{{ include "kairn.service" (dict "root" . "component" "web" "port" 3000) }}
+---
+{{ include "kairn.pdb" (dict "root" . "component" "web") }}
+---
+{{- if not $single }}
+# ---------------------------------------------------------------- Ingestion
+{{ include "kairn.deployment" (dict "root" . "component" "ingest-gateway" "image" "ingest" "values" .Values.ingestGateway "port" 8080 "env" "go" "args" (list "gateway")) }}
+---
+{{ include "kairn.service" (dict "root" . "component" "ingest-gateway" "port" 8080) }}
+---
+{{ include "kairn.pdb" (dict "root" . "component" "ingest-gateway") }}
+---
+{{ include "kairn.deployment" (dict "root" . "component" "ingest-worker" "image" "ingest" "values" .Values.ingestWorker "port" 8080 "env" "go" "args" (list "worker")) }}
+---
+{{/* Ordonnanceur : une seule instance (publie les tâches périodiques). */}}
+{{ include "kairn.deployment" (dict "root" . "component" "scheduler" "image" "ingest" "values" .Values.scheduler "port" 8080 "env" "go" "args" (list "scheduler") "replicas" 1 "strategy" "Recreate") }}
+---
+# ---------------------------------------------------------------- Coûts et alertes
+{{ include "kairn.deployment" (dict "root" . "component" "cost-engine" "image" "cost-engine" "values" .Values.costEngine "port" 8080 "env" "go") }}
+---
+{{ include "kairn.deployment" (dict "root" . "component" "notifier" "image" "notifier" "values" .Values.notifier "port" 8080 "env" "go") }}
+---
+{{- end }}
+# ---------------------------------------------------------------- Analyse (Python)
+{{ include "kairn.deployment" (dict "root" . "component" "analytics" "image" "analytics" "values" .Values.analytics "port" 8090 "env" "none" "readyPath" "/healthz"
+     "extraEnv" (list
+        (dict "name" "KAIRN_API_URL" "value" (printf "http://%s-api:8080" $fn))
+        (dict "name" "KAIRN_AI_URL" "value" (ternary (printf "http://%s-ai:8091" $fn) "" .Values.ai.enabled))
+        (dict "name" "KAIRN_SERVICE_TOKEN" "valueFrom" (dict "secretKeyRef" (dict "name" .Values.secrets.existingSecret "key" "service-token")))) ) }}
+---
+{{ include "kairn.service" (dict "root" . "component" "analytics" "port" 8090) }}
+---
+{{- if .Values.ai.enabled }}
+# ---------------------------------------------------------------- IA (assistant, rapports, MCP)
+{{ include "kairn.deployment" (dict "root" . "component" "ai" "image" "ai" "values" .Values.ai "port" 8091 "env" "none" "readyPath" "/healthz"
+     "extraEnv" (list
+        (dict "name" "KAIRN_API_URL" "value" (printf "http://%s-api:8080" $fn))
+        (dict "name" "KAIRN_PUBLIC_URL" "value" .Values.publicURL)
+        (dict "name" "KAIRN_ANTHROPIC_MODEL" "value" .Values.ai.anthropicModel)
+        (dict "name" "KAIRN_MISTRAL_MODEL" "value" .Values.ai.mistralModel)
+        (dict "name" "KAIRN_LOCAL_LLM_URL" "value" .Values.ai.localLLM.url)
+        (dict "name" "KAIRN_LOCAL_LLM_MODEL" "value" .Values.ai.localLLM.model)
+        (dict "name" "KAIRN_MCP_ALLOWED_HOSTS" "value" .Values.ingress.host)
+        (dict "name" "KAIRN_SERVICE_TOKEN" "valueFrom" (dict "secretKeyRef" (dict "name" .Values.secrets.existingSecret "key" "service-token")))
+        (dict "name" "ANTHROPIC_API_KEY" "valueFrom" (dict "secretKeyRef" (dict "name" .Values.secrets.existingSecret "key" "anthropic-api-key" "optional" true)))
+        (dict "name" "MISTRAL_API_KEY" "valueFrom" (dict "secretKeyRef" (dict "name" .Values.secrets.existingSecret "key" "mistral-api-key" "optional" true)))) ) }}
+---
+{{ include "kairn.service" (dict "root" . "component" "ai" "port" 8091) }}
+---
+{{- end }}
+{{- if .Values.probes.enabled }}
+{{- range .Values.probes.regions }}
+# ---------------------------------------------------------------- Sonde d'uptime {{ . }}
+{{ include "kairn.deployment" (dict "root" $ "component" (printf "probe-%s" .) "image" "ingest" "values" $.Values.probes "port" 8080 "env" "none" "args" (list "probe") "replicas" 1
+     "extraEnv" (list
+        (dict "name" "KAIRN_MODE" "value" "production")
+        (dict "name" "KAIRN_LOG_FORMAT" "value" "json")
+        (dict "name" "KAIRN_REGION" "value" .)
+        (dict "name" "KAIRN_GATEWAY_URL" "value" ($.Values.probes.gatewayURL | default (printf "http://%s-%s:8080" $fn (ternary "api" "ingest-gateway" $single))))
+        (dict "name" "KAIRN_PROBE_ALLOW_PRIVATE" "value" ($.Values.probes.allowPrivate | toString))
+        (dict "name" "KAIRN_SERVICE_TOKEN" "valueFrom" (dict "secretKeyRef" (dict "name" $.Values.secrets.existingSecret "key" "service-token")))) ) }}
+---
+{{- end }}
+{{- end }}

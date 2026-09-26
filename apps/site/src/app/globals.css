@@ -1,0 +1,110 @@
+@import "tailwindcss";
+
+/* Jetons de design (contraste AA vérifié en clair et en sombre). Palette alignée sur l'application. */
+:root {
+  --bg: #ffffff;
+  --bg-2: #f6f8fa;
+  --fg: #0b1220;
+  --muted: #4b5563;
+  --subtle: #6b7280;
+  --border: #e5e8ee;
+  --card: #ffffff;
+  --brand: #0f766e;
+  --brand-strong: #0b5f58;
+  --brand-fg: #ffffff;
+  --brand-soft: #e6f4f2;
+  --accent: #4f46e5;
+  --ink: #070b12; /* sections sombres */
+  --ink-2: #0e1520;
+  --ink-fg: #e8edf4;
+  --ink-muted: #a3aebd;
+  --ink-border: #1f2a3a;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #070b12;
+    --bg-2: #0c121b;
+    --fg: #e8edf4;
+    --muted: #a3aebd;
+    --subtle: #8b96a6;
+    --border: #1f2a3a;
+    --card: #0e1520;
+    --brand: #2dd4bf;
+    --brand-strong: #5eead4;
+    --brand-fg: #04201c;
+    --brand-soft: #0f2b28;
+    --accent: #818cf8;
+  }
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-2: var(--bg-2);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-subtle: var(--subtle);
+  --color-border: var(--border);
+  --color-card: var(--card);
+  --color-brand: var(--brand);
+  --color-brand-strong: var(--brand-strong);
+  --color-brand-fg: var(--brand-fg);
+  --color-brand-soft: var(--brand-soft);
+  --color-accent: var(--accent);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-fg: var(--ink-fg);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-border: var(--ink-border);
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-mono-face), ui-monospace, monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Grille décorative des sections sombres. */
+.grid-bg {
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.05) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+}
+
+.glow {
+  background:
+    radial-gradient(40rem 22rem at 50% -4rem, rgb(45 212 191 / 0.28), transparent 70%),
+    radial-gradient(30rem 20rem at 85% 10%, rgb(99 102 241 / 0.22), transparent 70%);
+}
+
+.text-gradient {
+  background: linear-gradient(90deg, #5eead4, #a5b4fc);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+details > summary {
+  list-style: none;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
+details[open] .chevron {
+  transform: rotate(180deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

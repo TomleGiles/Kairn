@@ -1,0 +1,164 @@
+# Valeurs du chart Kairn. Les dépendances (PostgreSQL 16+, ClickHouse 24.3+,
+# NATS JetStream, stockage S3, Keycloak/OIDC, Vault) sont fournies séparément
+# (services managés du cloud hôte ou opérateurs) : le chart ne déploie que Kairn.
+
+image:
+  registry: registry.kairn.io/kairn
+  tag: ""            # défaut : appVersion du chart
+  pullPolicy: IfNotPresent
+imagePullSecrets: []
+
+# distributed : un Deployment par service, bus NATS obligatoire.
+# single-node : l'API exécute aussi workers, ordonnanceur et passerelle (petites installations, pas de NATS).
+mode: distributed
+
+publicURL: https://kairn.example.com   # URL de l'application web
+apiURL: ""                            # défaut : publicURL (l'ingress route /api vers l'API)
+
+config:
+  logLevel: info
+  region: eu-west-gra                  # région des sondes intégrées / de l'instance
+  oidc:
+    issuer: ""                         # ex. https://sso.example.com/realms/kairn
+    clientId: kairn
+  smtp:
+    addr: ""                           # ex. smtp.example.com:587
+    from: "Kairn <no-reply@example.com>"
+    user: ""
+  otlpEndpoint: ""                     # collecteur OpenTelemetry (traces, métriques)
+  # Proxys (ingress) autorisés à transmettre l'IP cliente via X-Forwarded-For.
+  # Réseau des pods du cluster ; jamais 0.0.0.0/0 (IP falsifiable).
+  trustedProxies: ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16", "100.64.0.0/10"]
+  demoSeed: false
+  # Grilles tarifaires publiques importées chaque jour (API publiques des
+  # fournisseurs, sans credential). Liste vide = aucun import (installation
+  # sans accès sortant : importer les grilles via l'API /pricing/catalogs).
+  priceImport: ["ovh", "scaleway", "outscale"]
+
+postgres:
+  # Les DSN (avec mot de passe) proviennent du secret : postgres-url (rôle applicatif,
+  # NOBYPASSRLS) et postgres-migrate-url (rôle propriétaire, BYPASSRLS). Voir ADR-0002.
+  sslmode: require
+clickhouse:
+  url: http://clickhouse:8123
+  database: kairn
+  user: kairn
+nats:
+  url: nats://nats:4222
+redis:
+  url: ""
+s3:
+  endpoint: ""                         # ex. s3.gra.io.cloud.ovh.net ; vide = disque local (single-node uniquement)
+  bucket: kairn
+  region: gra
+  accessKey: ""
+  useSSL: true
+vault:
+  addr: ""                             # Vault Transit (sinon : clé maîtresse KEK du secret)
+  transitKey: kairn
+
+# Secret contenant les valeurs sensibles (jamais dans values.yaml en production) :
+#   postgres-url, postgres-migrate-url, clickhouse-password, session-secret,
+#   service-token, kek (ou vault-token), s3-secret-key, oidc-client-secret,
+#   smtp-password, anthropic-api-key, mistral-api-key, stripe-secret-key, stripe-webhook-secret
+secrets:
+  existingSecret: kairn-secrets
+
+# Politique LLM : aucun appel hors UE sans autorisation explicite de l'organisation.
+ai:
+  enabled: true
+  replicas: 2
+  anthropicModel: claude-opus-5
+  mistralModel: mistral-large-latest
+  localLLM:
+    url: ""                            # modèle local compatible OpenAI (édition self-hosted)
+    model: ""
+  resources:
+    requests: {cpu: 100m, memory: 256Mi}
+    limits: {memory: 1Gi}
+
+api:
+  replicas: 2
+  resources:
+    requests: {cpu: 200m, memory: 256Mi}
+    limits: {memory: 1Gi}
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 70
+
+web:
+  replicas: 2
+  resources:
+    requests: {cpu: 100m, memory: 192Mi}
+    limits: {memory: 512Mi}
+
+ingestGateway:
+  replicas: 2
+  resources:
+    requests: {cpu: 100m, memory: 128Mi}
+    limits: {memory: 512Mi}
+ingestWorker:
+  replicas: 2
+  resources:
+    requests: {cpu: 200m, memory: 256Mi}
+    limits: {memory: 2Gi}
+scheduler:
+  resources:
+    requests: {cpu: 50m, memory: 64Mi}
+    limits: {memory: 256Mi}
+costEngine:
+  replicas: 2
+  resources:
+    requests: {cpu: 200m, memory: 256Mi}
+    limits: {memory: 2Gi}
+notifier:
+  replicas: 1
+  resources:
+    requests: {cpu: 50m, memory: 64Mi}
+    limits: {memory: 256Mi}
+analytics:
+  replicas: 1
+  resources:
+    requests: {cpu: 200m, memory: 256Mi}
+    limits: {memory: 2Gi}
+
+# Sondes d'uptime : une instance par région (déployées dans le cluster de la région).
+probes:
+  enabled: false
+  regions: []                          # ex. [eu-west-gra, eu-central-waw]
+  gatewayURL: ""                       # défaut : service de la passerelle
+  allowPrivate: false                  # true : autorise les cibles privées (self-hosted sondant le réseau interne)
+  resources:
+    requests: {cpu: 50m, memory: 64Mi}
+    limits: {memory: 128Mi}
+
+ingress:
+  enabled: true
+  className: nginx
+  host: kairn.example.com
+  annotations: {}
+  tls:
+    enabled: true
+    secretName: kairn-tls
+
+networkPolicy:
+  enabled: true
+
+serviceAccount:
+  create: true
+  annotations: {}
+
+podSecurityContext:
+  runAsNonRoot: true
+  seccompProfile: {type: RuntimeDefault}
+securityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  capabilities: {drop: [ALL]}
+
+podAnnotations: {}
+nodeSelector: {}
+tolerations: []
+affinity: {}

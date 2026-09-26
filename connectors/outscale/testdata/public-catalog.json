@@ -1,0 +1,251 @@
+{
+ "Catalog": {
+  "Entries": [
+   {
+    "UnitPrice": 0.005,
+    "Type": "ElasticIP:IdleAddress",
+    "Title": "EIP - IP Externe additionnelle non associee a une instance demarree - par heure",
+    "SubregionName": "eu-west-2",
+    "Operation": "AssociateAddress",
+    "Service": "TinaOS-FCU",
+    "Category": "network"
+   },
+   {
+    "UnitPrice": 0.039,
+    "Type": "BSU:VolumeUsage:standard",
+    "Title": "BSU - Stockage Magnetique - par GiB et par mois",
+    "SubregionName": "eu-west-2",
+    "Operation": "CreateVolume",
+    "Flags": "PER_MONTH",
+    "Service": "TinaOS-FCU",
+    "Category": "storage"
+   },
+   {
+    "UnitPrice": 0.13,
+    "Type": "BSU:VolumeUsage:io1",
+    "Title": "BSU - Stockage Entreprise - par GiB et par mois",
+    "SubregionName": "eu-west-2",
+    "Operation": "CreateVolume",
+    "Flags": "PER_MONTH",
+    "Service": "TinaOS-FCU",
+    "Category": "storage"
+   },
+   {
+    "UnitPrice": 0.121,
+    "Type": "ProductUsage",
+    "Title": "Cout additionnel pour une licence windows - par heure",
+    "SubregionName": "eu-west-2",
+    "Operation": "RunInstances-0002-OD",
+    "Service": "TinaOS-FCU",
+    "Category": "licence"
+   },
+   {
+    "UnitPrice": 0.05,
+    "Type": "NatGatewayUsage",
+    "Title": "Nat Gateway - Utilisation - par heure",
+    "SubregionName": "eu-west-2",
+    "Operation": "CreateNatGateway",
+    "Service": "TinaOS-FCU",
+    "Category": "network"
+   },
+   {
+    "UnitPrice": 0.025,
+    "Type": "enterprise",
+    "Title": "OOS - Stockage Enterprise - par GiB et par mois",
+    "SubregionName": "eu-west-2",
+    "Operation": "OOSStorage",
+    "Flags": "PER_MONTH",
+    "Service": "TinaOS-OOS",
+    "Category": "storage"
+   },
+   {
+    "UnitPrice": 2.0,
+    "Type": "Gpu:allocate:nvidia-a100",
+    "Title": "GPU - GPU alloue et non attachee a une instance - nvidia-a100 - par heure",
+    "SubregionName": "eu-west-2",
+    "Operation": "AllocateGpu",
+    "Service": "TinaOS-FCU",
+    "Category": "compute"
+   },
+   {
+    "UnitPrice": 0.005,
+    "Type": "ElasticIP:AdditionalAddress",
+    "Title": "EIP - IP Externe additionnelle dans un VPC associee a une instance demarree - par heure",
+    "SubregionName": "eu-west-2",
+    "Operation": "AssociateAddressVPC",
+    "Service": "TinaOS-FCU",
+    "Category": "network"
+   },
+   {
+    "UnitPrice": 0.005,
+    "Type": "ElasticIP:IdleAddress",
+    "Title": "EIP - IP Externe additionnelle dans un VPC non associee a une instance demarree - par heure",
+    "SubregionName": "eu-west-2",
+    "Operation": "AssociateAddressVPC",
+    "Service": "TinaOS-FCU",
+    "Category": "network"
+   },
+   {
+    "UnitPrice": 2950.0,
+    "Type": "LocatePort:1G",
+    "Title": "Hosted DirectLink - Utilisation port 1 Gbps - par mois",
+    "SubregionName": "eu-west-2",
+    "Operation": "CreateConnection",
+    "Flags": "PER_MONTH",
+    "Service": "TinaOS-HostedDirectLink",
+    "Category": "network"
+   },
+   {
+    "UnitPrice": 0.03,
+    "Type": "LBU:Usage",
+    "Title": "LBU - Utilisation - par service et par heure",
+    "SubregionName": "eu-west-2",
+    "Operation": "CreateLoadBalancer",
+    "Service": "TinaOS-LBU",
+    "Category": "network"
+   },
+   {
+    "UnitPrice": 0.055,
+    "Type": "Snapshot:Usage",
+    "Title": "Snapshot - Stockage - par GiB et par mois",
+    "SubregionName": "eu-west-2",
+    "Operation": "Snapshot",
+    "Flags": "PER_MONTH",
+    "Service": "TinaOS-FCU",
+    "Category": "storage"
+   },
+   {
+    "UnitPrice": 0.01,
+    "Type": "BSU:VolumeIOPS:io1",
+    "Title": "BSU - Stockage Entreprise - par IOPS et par mois",
+    "SubregionName": "eu-west-2",
+    "Operation": "CreateVolume",
+    "Flags": "PER_MONTH",
+    "Service": "TinaOS-FCU",
+    "Category": "storage"
+   },
+   {
+    "UnitPrice": 400.0,
+    "Type": "LocatePort:1G",
+    "Title": "DirectLink - Utilisation port 1 Gbps - par mois",
+    "SubregionName": "eu-west-2",
+    "Operation": "CreateConnection",
+    "Flags": "PER_MONTH",
+    "Service": "TinaOS-DirectLink",
+    "Category": "network"
+   },
+   {
+    "UnitPrice": 2.0,
+    "Type": "Gpu:attach:nvidia-a100",
+    "Title": "GPU - GPU alloue et attache a une instance - nvidia-a100 - par heure",
+    "SubregionName": "eu-west-2",
+    "Operation": "AllocateGpu",
+    "Service": "TinaOS-FCU",
+    "Category": "compute"
+   },
+   {
+    "UnitPrice": 0.03,
+    "Type": "ConnectionUsage",
+    "Title": "VPN - Utilisation - par heure",
+    "SubregionName": "eu-west-2",
+    "Operation": "CreateVpnConnection",
+    "Service": "TinaOS-FCU",
+    "Category": "network"
+   },
+   {
+    "UnitPrice": 0.26,
+    "Type": "dedicated:cp.3.masters.medium",
+    "Title": "OKS - Plan de contrôle dédié (3 masters) - Medium - par heure",
+    "SubregionName": "eu-west-2",
+    "Operation": "ControlPlane",
+    "Service": "OKS",
+    "Category": "licence"
+   },
+   {
+    "UnitPrice": 0.0,
+    "Type": "enterprise",
+    "Title": "OOS - Trafic sortant - par GiB",
+    "SubregionName": "eu-west-2",
+    "Operation": "OOSDataTransfer",
+    "Service": "TinaOS-OOS",
+    "Category": "network"
+   },
+   {
+    "UnitPrice": 0.04,
+    "Type": "dedicated:cp.mono.master",
+    "Title": "OKS - Plan de contrôle dédié (mono master) - par heure",
+    "SubregionName": "eu-west-2",
+    "Operation": "ControlPlane",
+    "Service": "OKS",
+    "Category": "licence"
+   },
+   {
+    "UnitPrice": 0.035,
+    "Type": "CustomCore:v6-p2",
+    "Title": "Instance - On demand - Unite de vCore pour une instance Tina v6 CxRy Performance high - par heure",
+    "SubregionName": "eu-west-2",
+    "Operation": "RunInstances-OD",
+    "Service": "TinaOS-FCU",
+    "Category": "compute"
+   },
+   {
+    "UnitPrice": 0.005,
+    "Type": "CustomRam",
+    "Title": "Instance - On demand - Unite de RAM en GiB pour une instance Tina CxRy - par heure",
+    "SubregionName": "eu-west-2",
+    "Operation": "RunInstances-OD",
+    "Service": "TinaOS-FCU",
+    "Category": "compute"
+   },
+   {
+    "UnitPrice": 0.0,
+    "Type": "ProductUsage",
+    "Title": "Cout additionnel pour une licence linux - par heure",
+    "SubregionName": "eu-west-2",
+    "Operation": "RunInstances-0001-OD",
+    "Service": "TinaOS-FCU",
+    "Category": "licence"
+   },
+   {
+    "UnitPrice": 0.11,
+    "Type": "BSU:VolumeUsage:gp2",
+    "Title": "BSU - Stockage Performance - par GiB et par mois",
+    "SubregionName": "eu-west-2",
+    "Operation": "CreateVolume",
+    "Flags": "PER_MONTH",
+    "Service": "TinaOS-FCU",
+    "Category": "storage"
+   },
+   {
+    "UnitPrice": 0.0,
+    "Type": "DataTransfer-Internet:out",
+    "Title": "FCU Data Transfer - Traffic sortant -  par GiB",
+    "SubregionName": "eu-west-2",
+    "Operation": "RunInstances",
+    "Service": "TinaOS-FCU",
+    "Category": "network"
+   },
+   {
+    "UnitPrice": 0.043,
+    "Type": "CustomCore:v7-p1",
+    "Title": "Instance - On demand - Unite de vCore pour une instance Tina v7 CxRy Performance highest - par heure",
+    "SubregionName": "eu-west-2",
+    "Operation": "RunInstances-OD",
+    "Service": "TinaOS-FCU",
+    "Category": "compute"
+   },
+   {
+    "UnitPrice": 13.5,
+    "Type": "ProductUsage",
+    "Title": "Cout additionnel pour une licence ALLONIA - ALLONIA CHAT IA + SUPPORT (2 jours/mois) - par heure",
+    "SubregionName": "eu-west-2",
+    "Operation": "RunInstances-pty-7b4a4b18-OD",
+    "Service": "TinaOS-FCU",
+    "Category": "licence"
+   }
+  ]
+ },
+ "ResponseContext": {
+  "RequestId": "b6543d61-4972-4535-9fc8-64136492a708"
+ }
+}

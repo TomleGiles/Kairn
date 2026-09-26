@@ -1,0 +1,119 @@
+{
+  "total": "76.048483",
+  "lines": [
+    {
+      "resource_id": "",
+      "cost_type": "credit",
+      "sku": "support",
+      "source": "invoice",
+      "allocation_node_id": "unallocated",
+      "source_ref": "adjustment:adj-credit",
+      "catalog_version": "invoice:INV-2026-09",
+      "quantity": "0.000000",
+      "amount": "-0.474793",
+      "currency": "EUR"
+    },
+    {
+      "resource_id": "",
+      "cost_type": "other",
+      "sku": "support",
+      "source": "invoice",
+      "allocation_node_id": "unallocated",
+      "catalog_version": "invoice:INV-2026-09",
+      "quantity": "1.000000",
+      "amount": "3.036000",
+      "currency": "EUR"
+    },
+    {
+      "resource_id": "aws-1",
+      "cost_type": "compute",
+      "sku": "BoxUsage:m5.large",
+      "source": "invoice",
+      "allocation_node_id": "legacy",
+      "catalog_version": "invoice:INV-2026-09",
+      "quantity": "24.000000",
+      "amount": "2.484000",
+      "currency": "EUR"
+    },
+    {
+      "resource_id": "aws-1",
+      "cost_type": "credit",
+      "sku": "BoxUsage:m5.large",
+      "source": "invoice",
+      "allocation_node_id": "legacy",
+      "source_ref": "adjustment:adj-credit",
+      "catalog_version": "invoice:INV-2026-09",
+      "quantity": "0.000000",
+      "amount": "-0.388467",
+      "currency": "EUR"
+    },
+    {
+      "resource_id": "aws-2",
+      "cost_type": "compute",
+      "sku": "compute.flavor.m5.large",
+      "source": "estimate",
+      "allocation_node_id": "legacy",
+      "catalog_version": "aws@2026-09",
+      "quantity": "24.000000",
+      "amount": "2.472960",
+      "currency": "EUR"
+    },
+    {
+      "resource_id": "aws-2",
+      "cost_type": "credit",
+      "sku": "compute.flavor.m5.large",
+      "source": "estimate",
+      "allocation_node_id": "legacy",
+      "source_ref": "adjustment:adj-credit",
+      "catalog_version": "aws@2026-09",
+      "quantity": "0.000000",
+      "amount": "-0.386740",
+      "currency": "EUR"
+    },
+    {
+      "resource_id": "host-1",
+      "cost_type": "compute",
+      "sku": "onprem.ram_gb",
+      "source": "onprem",
+      "allocation_node_id": "infra",
+      "catalog_version": "onprem:m-dc1",
+      "quantity": "12288.000000",
+      "amount": "17.601403",
+      "currency": "EUR"
+    },
+    {
+      "resource_id": "host-1",
+      "cost_type": "compute",
+      "sku": "onprem.vcpu",
+      "source": "onprem",
+      "allocation_node_id": "infra",
+      "catalog_version": "onprem:m-dc1",
+      "quantity": "1536.000000",
+      "amount": "22.001753",
+      "currency": "EUR"
+    },
+    {
+      "resource_id": "host-2",
+      "cost_type": "compute",
+      "sku": "onprem.ram_gb",
+      "source": "onprem",
+      "allocation_node_id": "infra",
+      "catalog_version": "onprem:m-dc1",
+      "quantity": "9216.000000",
+      "amount": "13.201052",
+      "currency": "EUR"
+    },
+    {
+      "resource_id": "host-2",
+      "cost_type": "compute",
+      "sku": "onprem.vcpu",
+      "source": "onprem",
+      "allocation_node_id": "infra",
+      "catalog_version": "onprem:m-dc1",
+      "quantity": "1152.000000",
+      "amount": "16.501315",
+      "currency": "EUR"
+    }
+  ],
+  "warnings": []
+}

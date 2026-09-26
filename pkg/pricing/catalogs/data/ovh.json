@@ -1,0 +1,320 @@
+{
+ "provider": "ovh",
+ "version": "sample-2026-09",
+ "source": "sample",
+ "currency": "EUR",
+ "valid_from": "2025-01-01T00:00:00Z",
+ "note": "Grille d'exemple indicative pour OVHcloud Public Cloud (tarifs publics approximatifs, reprise de la grille openstack d'exemple). À remplacer par l'import officiel du catalogue OVHcloud avant tout usage contractuel.",
+ "items": [
+  {
+   "sku": "compute.flavor.d2-2",
+   "unit": "hour",
+   "price": "0.0099",
+   "attributes": {
+    "vcpus": "1",
+    "ram_gb": "2",
+    "family": "discovery"
+   }
+  },
+  {
+   "sku": "compute.flavor.d2-4",
+   "unit": "hour",
+   "price": "0.0198",
+   "attributes": {
+    "vcpus": "2",
+    "ram_gb": "4",
+    "family": "discovery"
+   }
+  },
+  {
+   "sku": "compute.flavor.b2-7",
+   "unit": "hour",
+   "price": "0.0681",
+   "attributes": {
+    "vcpus": "2",
+    "ram_gb": "7",
+    "family": "general"
+   }
+  },
+  {
+   "sku": "compute.flavor.b2-15",
+   "unit": "hour",
+   "price": "0.1331",
+   "attributes": {
+    "vcpus": "4",
+    "ram_gb": "15",
+    "family": "general"
+   }
+  },
+  {
+   "sku": "compute.flavor.b2-30",
+   "unit": "hour",
+   "price": "0.2651",
+   "attributes": {
+    "vcpus": "8",
+    "ram_gb": "30",
+    "family": "general"
+   }
+  },
+  {
+   "sku": "compute.flavor.b2-60",
+   "unit": "hour",
+   "price": "0.5271",
+   "attributes": {
+    "vcpus": "16",
+    "ram_gb": "60",
+    "family": "general"
+   }
+  },
+  {
+   "sku": "compute.flavor.b2-120",
+   "unit": "hour",
+   "price": "1.0491",
+   "attributes": {
+    "vcpus": "32",
+    "ram_gb": "120",
+    "family": "general"
+   }
+  },
+  {
+   "sku": "compute.flavor.b3-8",
+   "unit": "hour",
+   "price": "0.0748",
+   "attributes": {
+    "vcpus": "2",
+    "ram_gb": "8",
+    "family": "general-v3"
+   }
+  },
+  {
+   "sku": "compute.flavor.b3-16",
+   "unit": "hour",
+   "price": "0.1496",
+   "attributes": {
+    "vcpus": "4",
+    "ram_gb": "16",
+    "family": "general-v3"
+   }
+  },
+  {
+   "sku": "compute.flavor.b3-32",
+   "unit": "hour",
+   "price": "0.2992",
+   "attributes": {
+    "vcpus": "8",
+    "ram_gb": "32",
+    "family": "general-v3"
+   }
+  },
+  {
+   "sku": "compute.flavor.c2-7",
+   "unit": "hour",
+   "price": "0.0981",
+   "attributes": {
+    "vcpus": "4",
+    "ram_gb": "7",
+    "family": "cpu"
+   }
+  },
+  {
+   "sku": "compute.flavor.c2-15",
+   "unit": "hour",
+   "price": "0.2051",
+   "attributes": {
+    "vcpus": "8",
+    "ram_gb": "15",
+    "family": "cpu"
+   }
+  },
+  {
+   "sku": "compute.flavor.c2-30",
+   "unit": "hour",
+   "price": "0.4171",
+   "attributes": {
+    "vcpus": "16",
+    "ram_gb": "30",
+    "family": "cpu"
+   }
+  },
+  {
+   "sku": "compute.flavor.r2-15",
+   "unit": "hour",
+   "price": "0.0911",
+   "attributes": {
+    "vcpus": "2",
+    "ram_gb": "15",
+    "family": "memory"
+   }
+  },
+  {
+   "sku": "compute.flavor.r2-30",
+   "unit": "hour",
+   "price": "0.1711",
+   "attributes": {
+    "vcpus": "2",
+    "ram_gb": "30",
+    "family": "memory"
+   }
+  },
+  {
+   "sku": "compute.flavor.r2-60",
+   "unit": "hour",
+   "price": "0.3241",
+   "attributes": {
+    "vcpus": "4",
+    "ram_gb": "60",
+    "family": "memory"
+   }
+  },
+  {
+   "sku": "compute.vcpu",
+   "unit": "vcpu_hour",
+   "price": "0.0254",
+   "attributes": {}
+  },
+  {
+   "sku": "compute.ram_gb",
+   "unit": "gb_hour",
+   "price": "0.0034",
+   "attributes": {}
+  },
+  {
+   "sku": "storage.volume.classic",
+   "unit": "gb_month",
+   "price": "0.04",
+   "attributes": {}
+  },
+  {
+   "sku": "storage.volume.high-speed",
+   "unit": "gb_month",
+   "price": "0.08",
+   "attributes": {}
+  },
+  {
+   "sku": "storage.volume.high-speed-gen2",
+   "unit": "gb_month",
+   "price": "0.10",
+   "attributes": {}
+  },
+  {
+   "sku": "storage.volume",
+   "unit": "gb_month",
+   "price": "0.04",
+   "attributes": {}
+  },
+  {
+   "sku": "storage.snapshot",
+   "unit": "gb_month",
+   "price": "0.01",
+   "attributes": {}
+  },
+  {
+   "sku": "storage.object.standard",
+   "unit": "gb_month",
+   "price": "0.0112",
+   "attributes": {}
+  },
+  {
+   "sku": "storage.object.archive",
+   "unit": "gb_month",
+   "price": "0.0024",
+   "attributes": {}
+  },
+  {
+   "sku": "network.ip.floating",
+   "unit": "hour",
+   "price": "0.0025",
+   "attributes": {}
+  },
+  {
+   "sku": "network.lb.small",
+   "unit": "hour",
+   "price": "0.0139",
+   "attributes": {}
+  },
+  {
+   "sku": "network.lb.medium",
+   "unit": "hour",
+   "price": "0.0278",
+   "attributes": {}
+  },
+  {
+   "sku": "network.lb.large",
+   "unit": "hour",
+   "price": "0.0556",
+   "attributes": {}
+  },
+  {
+   "sku": "network.lb",
+   "unit": "hour",
+   "price": "0.0139",
+   "attributes": {}
+  },
+  {
+   "sku": "k8s.control_plane.free",
+   "unit": "hour",
+   "price": "0",
+   "attributes": {}
+  },
+  {
+   "sku": "k8s.control_plane.standard",
+   "unit": "hour",
+   "price": "0.0833",
+   "attributes": {}
+  },
+  {
+   "sku": "license.windows",
+   "unit": "vcpu_hour",
+   "price": "0.0125",
+   "attributes": {}
+  },
+  {
+   "sku": "compute.flavor.b2-7.monthly",
+   "unit": "month",
+   "price": "24.80",
+   "attributes": {
+    "billing": "monthly"
+   }
+  },
+  {
+   "sku": "compute.flavor.b2-15.monthly",
+   "unit": "month",
+   "price": "48.40",
+   "attributes": {
+    "billing": "monthly"
+   }
+  },
+  {
+   "sku": "compute.flavor.b2-30.monthly",
+   "unit": "month",
+   "price": "96.80",
+   "attributes": {
+    "billing": "monthly"
+   }
+  },
+  {
+   "sku": "compute.flavor.b2-60.monthly",
+   "unit": "month",
+   "price": "193.60",
+   "attributes": {
+    "billing": "monthly"
+   }
+  },
+  {
+   "sku": "compute.flavor.c2-30.monthly",
+   "unit": "month",
+   "price": "152.00",
+   "attributes": {
+    "billing": "monthly"
+   }
+  },
+  {
+   "sku": "compute.flavor.d2-2.monthly",
+   "unit": "month",
+   "price": "3.60",
+   "attributes": {
+    "billing": "monthly"
+   }
+  }
+ ]
+}

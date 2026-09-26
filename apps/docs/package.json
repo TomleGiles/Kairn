@@ -1,0 +1,14 @@
+{
+  "name": "@kairn/docs",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Site de documentation Kairn : docs/ en HTML statique, servi par l'interface sous /docs",
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "marked": "^18.0.14"
+  }
+}

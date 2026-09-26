@@ -1,0 +1,91 @@
+{
+ "provider": "outscale",
+ "version": "sample-2026-09",
+ "source": "sample",
+ "currency": "EUR",
+ "valid_from": "2025-01-01T00:00:00Z",
+ "note": "Grille d'exemple indicative (tarifs publics approximatifs). À remplacer par l'import officiel du fournisseur avant tout usage contractuel.",
+ "items": [
+  {
+   "sku": "compute.vcpu",
+   "unit": "vcpu_hour",
+   "price": "0.0203",
+   "attributes": {}
+  },
+  {
+   "sku": "compute.ram_gb",
+   "unit": "gb_hour",
+   "price": "0.0045",
+   "attributes": {}
+  },
+  {
+   "sku": "compute.flavor.tinav6.c2r4p2",
+   "unit": "hour",
+   "price": "0.058",
+   "attributes": {
+    "vcpus": "2",
+    "ram_gb": "4"
+   }
+  },
+  {
+   "sku": "compute.flavor.tinav6.c4r8p2",
+   "unit": "hour",
+   "price": "0.117",
+   "attributes": {
+    "vcpus": "4",
+    "ram_gb": "8"
+   }
+  },
+  {
+   "sku": "compute.flavor.tinav6.c8r16p2",
+   "unit": "hour",
+   "price": "0.234",
+   "attributes": {
+    "vcpus": "8",
+    "ram_gb": "16"
+   }
+  },
+  {
+   "sku": "storage.volume.standard",
+   "unit": "gb_month",
+   "price": "0.044",
+   "attributes": {}
+  },
+  {
+   "sku": "storage.volume.gp2",
+   "unit": "gb_month",
+   "price": "0.1",
+   "attributes": {}
+  },
+  {
+   "sku": "storage.volume.io1",
+   "unit": "gb_month",
+   "price": "0.13",
+   "attributes": {}
+  },
+  {
+   "sku": "storage.volume",
+   "unit": "gb_month",
+   "price": "0.1",
+   "attributes": {}
+  },
+  {
+   "sku": "storage.snapshot",
+   "unit": "gb_month",
+   "price": "0.05",
+   "attributes": {}
+  },
+  {
+   "sku": "network.ip.floating",
+   "unit": "hour",
+   "price": "0.005",
+   "attributes": {}
+  },
+  {
+   "sku": "network.lb",
+   "unit": "hour",
+   "price": "0.025",
+   "attributes": {}
+  }
+ ]
+}

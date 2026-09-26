@@ -1,0 +1,49 @@
+# Accès en lecture seule pour le connecteur Kubernetes de Kairn (à appliquer dans le cluster suivi).
+#   kubectl apply -f kairn-reader.yaml
+#   kubectl -n kairn-system create token kairn-reader --duration=8760h   # jeton à saisir dans Kairn
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kairn-system
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: kairn-reader
+  namespace: kairn-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: kairn-reader
+rules:
+  - apiGroups: [""]
+    resources: [nodes, namespaces, pods, persistentvolumeclaims, persistentvolumes, events]
+    verbs: [get, list, watch]
+  - apiGroups: [apps]
+    resources: [deployments, statefulsets, daemonsets, replicasets]
+    verbs: [get, list, watch]
+  - apiGroups: [batch]
+    resources: [jobs, cronjobs]
+    verbs: [get, list, watch]
+  - apiGroups: [autoscaling]
+    resources: [horizontalpodautoscalers]
+    verbs: [get, list, watch]
+  - apiGroups: [metrics.k8s.io]
+    resources: [pods, nodes]
+    verbs: [get, list]
+  - nonResourceURLs: [/version]
+    verbs: [get]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: kairn-reader
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: kairn-reader
+subjects:
+  - kind: ServiceAccount
+    name: kairn-reader
+    namespace: kairn-system

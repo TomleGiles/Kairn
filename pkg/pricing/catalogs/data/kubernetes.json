@@ -1,0 +1,22 @@
+{
+ "provider": "kubernetes",
+ "version": "sample-2026-09",
+ "source": "sample",
+ "currency": "EUR",
+ "valid_from": "2025-01-01T00:00:00Z",
+ "note": "Grille d'exemple indicative (tarifs publics approximatifs). À remplacer par l'import officiel du fournisseur avant tout usage contractuel.",
+ "items": [
+  {
+   "sku": "k8s.control_plane.free",
+   "unit": "hour",
+   "price": "0",
+   "attributes": {}
+  },
+  {
+   "sku": "k8s.control_plane.standard",
+   "unit": "hour",
+   "price": "0.1",
+   "attributes": {}
+  }
+ ]
+}

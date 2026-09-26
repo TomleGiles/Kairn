@@ -1,0 +1,19 @@
+publicURL: https://app.kairn.io
+ingress:
+  host: app.kairn.io
+  annotations: {cert-manager.io/cluster-issuer: letsencrypt}
+s3:
+  endpoint: s3.gra.io.cloud.ovh.net
+  bucket: kairn-production
+  region: gra
+vault: {addr: https://vault.kairn.internal, transitKey: kairn}
+clickhouse: {url: "http://clickhouse-kairn.clickhouse:8123"}
+nats: {url: "nats://nats.nats:4222"}
+config:
+  oidc: {issuer: https://sso.kairn.io/realms/kairn}
+  smtp: {addr: "smtp.mail.ovh.net:587", from: "Kairn <no-reply@kairn.io>", user: no-reply@kairn.io}
+  otlpEndpoint: http://otel-collector.observability:4318
+api: {autoscaling: {minReplicas: 3, maxReplicas: 12}}
+ingestWorker: {replicas: 4}
+costEngine: {replicas: 3}
+probes: {enabled: true, regions: [eu-west-gra, eu-west-sbg, eu-central-waw]}

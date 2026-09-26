@@ -1,0 +1,9 @@
+# Valeurs de test (CI) : nœud unique sans NATS ni S3 (petite installation self-hosted).
+mode: single-node
+publicURL: https://kairn.local.example
+ingress:
+  host: kairn.local.example
+  tls:
+    enabled: false
+ai:
+  enabled: false

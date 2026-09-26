@@ -1,0 +1,17 @@
+publicURL: https://staging.kairn.io
+image: {tag: main}
+ingress:
+  host: staging.kairn.io
+  annotations: {cert-manager.io/cluster-issuer: letsencrypt}
+s3:
+  endpoint: s3.gra.io.cloud.ovh.net
+  bucket: kairn-staging
+  region: gra
+clickhouse: {url: "http://clickhouse-kairn.clickhouse:8123"}
+nats: {url: "nats://nats.nats:4222"}
+config:
+  oidc: {issuer: https://sso.kairn.io/realms/kairn-staging}
+  smtp: {addr: "smtp.mail.ovh.net:587", from: "Kairn <no-reply@kairn.io>", user: no-reply@kairn.io}
+  otlpEndpoint: http://otel-collector.observability:4318
+api: {autoscaling: {minReplicas: 2, maxReplicas: 4}}
+probes: {enabled: true, regions: [eu-west-gra]}

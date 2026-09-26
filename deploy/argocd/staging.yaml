@@ -1,0 +1,22 @@
+# Application Argo CD « kairn-staging » : chart Helm du dépôt, valeurs de l'environnement.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kairn-staging
+  namespace: argocd
+  finalizers: [resources-finalizer.argocd.argoproj.io]
+spec:
+  project: kairn
+  source:
+    repoURL: https://github.com/kairn-io/kairn.git
+    targetRevision: main
+    path: deploy/helm/kairn
+    helm:
+      valueFiles: [../../argocd/values/staging.yaml]
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: kairn-staging
+  syncPolicy:
+    automated: {prune: true, selfHeal: true}
+    syncOptions: [CreateNamespace=true, ServerSideApply=true]
+    retry: {limit: 5, backoff: {duration: 30s, factor: 2, maxDuration: 10m}}

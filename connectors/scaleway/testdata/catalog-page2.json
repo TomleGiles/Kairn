@@ -1,0 +1,387 @@
+{
+ "products": [
+  {
+   "sku": "/storage/obj/usage-new-gen-bucket-standard/fr-par",
+   "service_category": "Storage",
+   "product_category": "Object Storage",
+   "product": "Standard Multi-AZ",
+   "variant": "Standard Multi-AZ - fr-par",
+   "description": "Standard Multi-AZ - fr-par (0.000022€ per GB)",
+   "locality": {
+    "region": "fr-par"
+   },
+   "price": {
+    "retail_price": {
+     "currency_code": "EUR",
+     "units": 0,
+     "nanos": 22000
+    }
+   },
+   "properties": {
+    "object_storage": {
+     "class": {
+      "storage_class": "standard"
+     }
+    }
+   },
+   "unit_of_measure": {
+    "unit": "gigabyte",
+    "size": 1
+   },
+   "status": "general_availability"
+  },
+  {
+   "sku": "/k8s/control-plane/kapsule-dedicated-16/fr-par",
+   "service_category": "Containers",
+   "product_category": "Kubernetes",
+   "product": "Kapsule Dedicated-16",
+   "variant": "Kapsule Dedicated-16 - fr-par",
+   "description": "Kapsule Dedicated-16 - fr-par (0.35€ per hour)",
+   "locality": {
+    "region": "fr-par"
+   },
+   "price": {
+    "retail_price": {
+     "currency_code": "EUR",
+     "units": 0,
+     "nanos": 350000000
+    }
+   },
+   "properties": {
+    "kubernetes": {
+     "kapsule_control_plane": {}
+    }
+   },
+   "unit_of_measure": {
+    "unit": "hour",
+    "size": 1
+   },
+   "status": "general_availability"
+  },
+  {
+   "sku": "/k8s/control-plane/kapsule-dedicated-4/fr-par",
+   "service_category": "Containers",
+   "product_category": "Kubernetes",
+   "product": "Kapsule Dedicated-4",
+   "variant": "Kapsule Dedicated-4 - fr-par",
+   "description": "Kapsule Dedicated-4 - fr-par (0.11€ per hour)",
+   "locality": {
+    "region": "fr-par"
+   },
+   "price": {
+    "retail_price": {
+     "currency_code": "EUR",
+     "units": 0,
+     "nanos": 110000000
+    }
+   },
+   "properties": {
+    "kubernetes": {
+     "kapsule_control_plane": {}
+    }
+   },
+   "unit_of_measure": {
+    "unit": "hour",
+    "size": 1
+   },
+   "status": "general_availability"
+  },
+  {
+   "sku": "/k8s/control-plane/kapsule-dedicated-8/fr-par",
+   "service_category": "Containers",
+   "product_category": "Kubernetes",
+   "product": "Kapsule Dedicated-8",
+   "variant": "Kapsule Dedicated-8 - fr-par",
+   "description": "Kapsule Dedicated-8 - fr-par (0.18€ per hour)",
+   "locality": {
+    "region": "fr-par"
+   },
+   "price": {
+    "retail_price": {
+     "currency_code": "EUR",
+     "units": 0,
+     "nanos": 180000000
+    }
+   },
+   "properties": {
+    "kubernetes": {
+     "kapsule_control_plane": {}
+    }
+   },
+   "unit_of_measure": {
+    "unit": "hour",
+    "size": 1
+   },
+   "status": "general_availability"
+  },
+  {
+   "sku": "/k8s/control-plane/fr-par",
+   "service_category": "Containers",
+   "product_category": "Kubernetes",
+   "product": "Kapsule Mutualized",
+   "variant": "Kubernetes Kapsule Mutualized - fr-par",
+   "description": "Kubernetes Kapsule Mutualized - fr-par (0€)",
+   "locality": {
+    "region": "fr-par"
+   },
+   "price": {
+    "retail_price": {
+     "currency_code": "EUR",
+     "units": 0,
+     "nanos": 0
+    }
+   },
+   "properties": {
+    "kubernetes": {
+     "kapsule_control_plane": {}
+    }
+   },
+   "unit_of_measure": {
+    "unit": "hour",
+    "size": 1
+   },
+   "status": "general_availability"
+  },
+  {
+   "sku": "/k8s/control-plane/multicloud-dedicated-16/fr-par",
+   "service_category": "Containers",
+   "product_category": "Kubernetes",
+   "product": "Kosmos Dedicated-16",
+   "variant": "Kubernetes Kosmos Dedicated-16 - fr-par",
+   "description": "Kubernetes Kosmos Dedicated-16 - fr-par (0.4944€ per hour)",
+   "locality": {
+    "region": "fr-par"
+   },
+   "price": {
+    "retail_price": {
+     "currency_code": "EUR",
+     "units": 0,
+     "nanos": 494400000
+    }
+   },
+   "properties": {
+    "kubernetes": {
+     "kosmos_control_plane": {}
+    }
+   },
+   "unit_of_measure": {
+    "unit": "hour",
+    "size": 1
+   },
+   "status": "general_availability"
+  },
+  {
+   "sku": "/k8s/control-plane/multicloud-dedicated-4/fr-par",
+   "service_category": "Containers",
+   "product_category": "Kubernetes",
+   "product": "Kosmos Dedicated-4",
+   "variant": "Kubernetes Kosmos Dedicated-4 - fr-par",
+   "description": "Kubernetes Kosmos Dedicated-4 - fr-par (0.2544€ per hour)",
+   "locality": {
+    "region": "fr-par"
+   },
+   "price": {
+    "retail_price": {
+     "currency_code": "EUR",
+     "units": 0,
+     "nanos": 254400000
+    }
+   },
+   "properties": {
+    "kubernetes": {
+     "kosmos_control_plane": {}
+    }
+   },
+   "unit_of_measure": {
+    "unit": "hour",
+    "size": 1
+   },
+   "status": "general_availability"
+  },
+  {
+   "sku": "/k8s/control-plane/multicloud-dedicated-8/fr-par",
+   "service_category": "Containers",
+   "product_category": "Kubernetes",
+   "product": "Kosmos Dedicated-8",
+   "variant": "Kubernetes Kosmos Dedicated-8 - fr-par",
+   "description": "Kubernetes Kosmos Dedicated-8 - fr-par (0.3244€ per hour)",
+   "locality": {
+    "region": "fr-par"
+   },
+   "price": {
+    "retail_price": {
+     "currency_code": "EUR",
+     "units": 0,
+     "nanos": 324400000
+    }
+   },
+   "properties": {
+    "kubernetes": {
+     "kosmos_control_plane": {}
+    }
+   },
+   "unit_of_measure": {
+    "unit": "hour",
+    "size": 1
+   },
+   "status": "general_availability"
+  },
+  {
+   "sku": "/k8s/multicloud/control-plane/fr-par",
+   "service_category": "Containers",
+   "product_category": "Kubernetes",
+   "product": "Kosmos Mutualized",
+   "variant": "Kubernetes Kosmos Mutualized - fr-par",
+   "description": "Kubernetes Kosmos Mutualized - fr-par (0.1444€ per hour)",
+   "locality": {
+    "region": "fr-par"
+   },
+   "price": {
+    "retail_price": {
+     "currency_code": "EUR",
+     "units": 0,
+     "nanos": 144400000
+    }
+   },
+   "properties": {
+    "kubernetes": {
+     "kosmos_control_plane": {}
+    }
+   },
+   "unit_of_measure": {
+    "unit": "hour",
+    "size": 1
+   },
+   "status": "general_availability"
+  },
+  {
+   "sku": "/network/loadbalancer/loadbalancer-s/ams1",
+   "service_category": "Network",
+   "product_category": "Loadbalancer",
+   "product": "LB-S",
+   "variant": "Loadbalancer LB-S - nl-ams-1",
+   "description": "Loadbalancer LB-S - nl-ams-1 (0.023€ per node)",
+   "locality": {
+    "zone": "nl-ams-1"
+   },
+   "price": {
+    "retail_price": {
+     "currency_code": "EUR",
+     "units": 0,
+     "nanos": 23000000
+    }
+   },
+   "properties": {
+    "load_balancer": {
+     "node": {
+      "offer_id": "lb-s",
+      "multi_cloud_provider": false,
+      "bandwidth": 200000000
+     }
+    }
+   },
+   "unit_of_measure": {
+    "unit": "node",
+    "size": 1
+   },
+   "status": "general_availability"
+  },
+  {
+   "sku": "/network/loadbalancer/loadbalancer-gp-m/ams1",
+   "service_category": "Network",
+   "product_category": "Loadbalancer",
+   "product": "LB-GP-M",
+   "variant": "Loadbalancer LB-GP-M - nl-ams-1",
+   "description": "Loadbalancer LB-GP-M - nl-ams-1 (0.054€ per node)",
+   "locality": {
+    "zone": "nl-ams-1"
+   },
+   "price": {
+    "retail_price": {
+     "currency_code": "EUR",
+     "units": 0,
+     "nanos": 54000000
+    }
+   },
+   "properties": {
+    "load_balancer": {
+     "node": {
+      "offer_id": "lb-gp-m",
+      "multi_cloud_provider": false,
+      "bandwidth": 500000000
+     }
+    }
+   },
+   "unit_of_measure": {
+    "unit": "node",
+    "size": 1
+   },
+   "status": "general_availability"
+  },
+  {
+   "sku": "/network/loadbalancer/ip/ams1",
+   "service_category": "Network",
+   "product_category": "Loadbalancer",
+   "product": "Load Balancer IP",
+   "variant": "Load Balancer IP - nl-ams-1",
+   "description": "Load Balancer IP - nl-ams-1 (0.005€ per ip)",
+   "locality": {
+    "zone": "nl-ams-1"
+   },
+   "price": {
+    "retail_price": {
+     "currency_code": "EUR",
+     "units": 0,
+     "nanos": 5000000
+    }
+   },
+   "properties": {
+    "load_balancer": {
+     "ipv4": {}
+    }
+   },
+   "unit_of_measure": {
+    "unit": "ip",
+    "size": 1
+   },
+   "status": "general_availability"
+  },
+  {
+   "sku": "/network/domain/migration/onl_scw",
+   "service_category": "Domains & Web Hosting",
+   "product_category": "Domains and DNS",
+   "product": "Domain migration Online - Scaleway",
+   "variant": "Domain migration Online - Scaleway - global",
+   "description": "Domain migration Online - Scaleway - global (0€)",
+   "locality": {
+    "global": true
+   },
+   "price": {
+    "retail_price": {
+     "currency_code": "EUR",
+     "units": 0,
+     "nanos": 0
+    }
+   },
+   "unit_of_measure": {
+    "unit": "request",
+    "size": 1
+   },
+   "status": "general_availability"
+  },
+  {
+   "sku": "/ai/generative_apis/consumption/offer",
+   "service_category": "AI",
+   "product_category": "Generative APIs",
+   "product": "Generative APIs Free Tier",
+   "variant": "Generative APIs Free Tier - global",
+   "description": "Generative APIs Free Tier - global",
+   "locality": {
+    "global": true
+   },
+   "unit_of_measure": null,
+   "status": "general_availability"
+  }
+ ],
+ "total_count": 28
+}

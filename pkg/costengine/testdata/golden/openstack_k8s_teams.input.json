@@ -1,0 +1,1045 @@
+{
+ "day": "2026-09-15T00:00:00Z",
+ "currency": "EUR",
+ "settings": {
+  "allow_external_llm": false,
+  "prefer_invoice": false,
+  "sso_enforced": false,
+  "k8s_allocation_method": "max",
+  "k8s_idle_mode": "keep"
+ },
+ "vat_rate": "0.2",
+ "resources": [
+  {
+   "id": "proj-shop",
+   "org_id": "org-golden",
+   "connector_id": "c-os",
+   "provider": "openstack",
+   "type": "project",
+   "external_id": "proj-shop",
+   "name": "shop-prod",
+   "region": "GRA11",
+   "attributes": {},
+   "labels": {
+    "team": "shop",
+    "env": "prod"
+   },
+   "valid_from": "2026-09-01T00:00:00Z"
+  },
+  {
+   "id": "proj-data",
+   "org_id": "org-golden",
+   "connector_id": "c-os",
+   "provider": "openstack",
+   "type": "project",
+   "external_id": "proj-data",
+   "name": "data-lab",
+   "region": "GRA11",
+   "attributes": {},
+   "labels": {
+    "team": "data",
+    "env": "dev"
+   },
+   "valid_from": "2026-09-01T00:00:00Z"
+  },
+  {
+   "id": "vm-web-1",
+   "org_id": "org-golden",
+   "connector_id": "c-os",
+   "provider": "openstack",
+   "type": "compute.instance",
+   "external_id": "vm-web-1",
+   "name": "web-1",
+   "region": "GRA11",
+   "attributes": {
+    "flavor": "b2-7",
+    "vcpus": 2,
+    "ram_gb": 7
+   },
+   "labels": {},
+   "valid_from": "2026-09-01T00:00:00Z"
+  },
+  {
+   "id": "vm-web-2",
+   "org_id": "org-golden",
+   "connector_id": "c-os",
+   "provider": "openstack",
+   "type": "compute.instance",
+   "external_id": "vm-web-2",
+   "name": "web-2",
+   "region": "GRA11",
+   "attributes": {
+    "flavor": "b2-7",
+    "vcpus": 2,
+    "ram_gb": 7
+   },
+   "labels": {},
+   "valid_from": "2026-09-15T09:15:00Z"
+  },
+  {
+   "id": "vm-db",
+   "org_id": "org-golden",
+   "connector_id": "c-os",
+   "provider": "openstack",
+   "type": "compute.instance",
+   "external_id": "vm-db",
+   "name": "db-1",
+   "region": "GRA11",
+   "attributes": {
+    "flavor": "b2-15",
+    "vcpus": 4,
+    "ram_gb": 15
+   },
+   "labels": {},
+   "valid_from": "2026-09-01T00:00:00Z",
+   "valid_to": "2026-09-15T14:00:00Z"
+  },
+  {
+   "id": "vm-db",
+   "org_id": "org-golden",
+   "connector_id": "c-os",
+   "provider": "openstack",
+   "type": "compute.instance",
+   "external_id": "vm-db",
+   "name": "db-1",
+   "region": "GRA11",
+   "attributes": {
+    "flavor": "b2-30",
+    "vcpus": 8,
+    "ram_gb": 30
+   },
+   "labels": {},
+   "valid_from": "2026-09-15T14:00:00Z"
+  },
+  {
+   "id": "vm-lab",
+   "org_id": "org-golden",
+   "connector_id": "c-os",
+   "provider": "openstack",
+   "type": "compute.instance",
+   "external_id": "vm-lab",
+   "name": "jupyter",
+   "region": "GRA11",
+   "attributes": {
+    "flavor": "b2-15",
+    "vcpus": 4,
+    "ram_gb": 15,
+    "billing_state": "stopped_billed"
+   },
+   "labels": {},
+   "valid_from": "2026-09-01T00:00:00Z"
+  },
+  {
+   "id": "vm-win",
+   "org_id": "org-golden",
+   "connector_id": "c-os",
+   "provider": "openstack",
+   "type": "compute.instance",
+   "external_id": "vm-win",
+   "name": "ad-dc",
+   "region": "GRA11",
+   "attributes": {
+    "flavor": "b2-7",
+    "vcpus": 2,
+    "ram_gb": 7,
+    "license": "windows"
+   },
+   "labels": {},
+   "valid_from": "2026-09-01T00:00:00Z"
+  },
+  {
+   "id": "vol-db",
+   "org_id": "org-golden",
+   "connector_id": "c-os",
+   "provider": "openstack",
+   "type": "storage.volume",
+   "external_id": "vol-db",
+   "name": "db-data",
+   "region": "GRA11",
+   "attributes": {
+    "size_gb": 500,
+    "volume_type": "high-speed"
+   },
+   "labels": {},
+   "valid_from": "2026-09-01T00:00:00Z"
+  },
+  {
+   "id": "vol-orphan",
+   "org_id": "org-golden",
+   "connector_id": "c-os",
+   "provider": "openstack",
+   "type": "storage.volume",
+   "external_id": "vol-orphan",
+   "name": "old-backup",
+   "region": "GRA11",
+   "attributes": {
+    "size_gb": 200,
+    "volume_type": "classic",
+    "status": "available"
+   },
+   "labels": {},
+   "valid_from": "2026-09-01T00:00:00Z"
+  },
+  {
+   "id": "snap-1",
+   "org_id": "org-golden",
+   "connector_id": "c-os",
+   "provider": "openstack",
+   "type": "storage.snapshot",
+   "external_id": "snap-1",
+   "name": "db-snap",
+   "region": "GRA11",
+   "attributes": {
+    "size_gb": 500
+   },
+   "labels": {},
+   "valid_from": "2026-09-01T00:00:00Z"
+  },
+  {
+   "id": "ip-1",
+   "org_id": "org-golden",
+   "connector_id": "c-os",
+   "provider": "openstack",
+   "type": "network.ip",
+   "external_id": "ip-1",
+   "name": "fip-web",
+   "region": "GRA11",
+   "attributes": {},
+   "labels": {},
+   "valid_from": "2026-09-01T00:00:00Z"
+  },
+  {
+   "id": "lb-1",
+   "org_id": "org-golden",
+   "connector_id": "c-os",
+   "provider": "openstack",
+   "type": "network.loadbalancer",
+   "external_id": "lb-1",
+   "name": "lb-web",
+   "region": "GRA11",
+   "attributes": {
+    "flavor": "small"
+   },
+   "labels": {},
+   "valid_from": "2026-09-01T00:00:00Z"
+  },
+  {
+   "id": "vm-k8s-1",
+   "org_id": "org-golden",
+   "connector_id": "c-os",
+   "provider": "openstack",
+   "type": "compute.instance",
+   "external_id": "vm-k8s-1",
+   "name": "k8s-node-1",
+   "region": "GRA11",
+   "attributes": {
+    "flavor": "b2-15",
+    "vcpus": 4,
+    "ram_gb": 15
+   },
+   "labels": {},
+   "valid_from": "2026-09-01T00:00:00Z"
+  },
+  {
+   "id": "vm-k8s-2",
+   "org_id": "org-golden",
+   "connector_id": "c-os",
+   "provider": "openstack",
+   "type": "compute.instance",
+   "external_id": "vm-k8s-2",
+   "name": "k8s-node-2",
+   "region": "GRA11",
+   "attributes": {
+    "flavor": "b2-15",
+    "vcpus": 4,
+    "ram_gb": 15
+   },
+   "labels": {},
+   "valid_from": "2026-09-01T00:00:00Z"
+  },
+  {
+   "id": "node-1",
+   "org_id": "org-golden",
+   "connector_id": "c-k8s",
+   "provider": "kubernetes",
+   "type": "k8s.node",
+   "external_id": "node-1",
+   "name": "k8s-node-1",
+   "region": "GRA11",
+   "attributes": {
+    "cpu_capacity_cores": 4,
+    "mem_capacity_gb": 15
+   },
+   "labels": {},
+   "valid_from": "2026-09-01T00:00:00Z"
+  },
+  {
+   "id": "node-2",
+   "org_id": "org-golden",
+   "connector_id": "c-k8s",
+   "provider": "kubernetes",
+   "type": "k8s.node",
+   "external_id": "node-2",
+   "name": "k8s-node-2",
+   "region": "GRA11",
+   "attributes": {
+    "cpu_capacity_cores": 4,
+    "mem_capacity_gb": 15
+   },
+   "labels": {},
+   "valid_from": "2026-09-01T00:00:00Z"
+  },
+  {
+   "id": "ns-shop",
+   "org_id": "org-golden",
+   "connector_id": "c-k8s",
+   "provider": "kubernetes",
+   "type": "k8s.namespace",
+   "external_id": "ns-shop",
+   "name": "shop",
+   "region": "GRA11",
+   "attributes": {},
+   "labels": {
+    "team": "shop"
+   },
+   "valid_from": "2026-09-01T00:00:00Z"
+  },
+  {
+   "id": "ns-search",
+   "org_id": "org-golden",
+   "connector_id": "c-k8s",
+   "provider": "kubernetes",
+   "type": "k8s.namespace",
+   "external_id": "ns-search",
+   "name": "search",
+   "region": "GRA11",
+   "attributes": {},
+   "labels": {
+    "team": "search"
+   },
+   "valid_from": "2026-09-01T00:00:00Z"
+  },
+  {
+   "id": "ns-sys",
+   "org_id": "org-golden",
+   "connector_id": "c-k8s",
+   "provider": "kubernetes",
+   "type": "k8s.namespace",
+   "external_id": "ns-sys",
+   "name": "kube-system",
+   "region": "GRA11",
+   "attributes": {},
+   "labels": {},
+   "valid_from": "2026-09-01T00:00:00Z"
+  },
+  {
+   "id": "pod-shop-1",
+   "org_id": "org-golden",
+   "connector_id": "c-k8s",
+   "provider": "kubernetes",
+   "type": "k8s.pod",
+   "external_id": "pod-shop-1",
+   "name": "shop-api-1",
+   "region": "GRA11",
+   "attributes": {
+    "cpu_request_cores": 1,
+    "mem_request_gb": 2,
+    "k8s.namespace": "shop"
+   },
+   "labels": {},
+   "valid_from": "2026-09-01T00:00:00Z"
+  },
+  {
+   "id": "pod-shop-2",
+   "org_id": "org-golden",
+   "connector_id": "c-k8s",
+   "provider": "kubernetes",
+   "type": "k8s.pod",
+   "external_id": "pod-shop-2",
+   "name": "shop-api-2",
+   "region": "GRA11",
+   "attributes": {
+    "cpu_request_cores": 1,
+    "mem_request_gb": 2,
+    "k8s.namespace": "shop"
+   },
+   "labels": {},
+   "valid_from": "2026-09-15T10:00:00Z"
+  },
+  {
+   "id": "pod-search",
+   "org_id": "org-golden",
+   "connector_id": "c-k8s",
+   "provider": "kubernetes",
+   "type": "k8s.pod",
+   "external_id": "pod-search",
+   "name": "search-0",
+   "region": "GRA11",
+   "attributes": {
+    "cpu_request_cores": 2,
+    "mem_request_gb": 6,
+    "k8s.namespace": "search"
+   },
+   "labels": {},
+   "valid_from": "2026-09-01T00:00:00Z"
+  },
+  {
+   "id": "pod-dns",
+   "org_id": "org-golden",
+   "connector_id": "c-k8s",
+   "provider": "kubernetes",
+   "type": "k8s.pod",
+   "external_id": "pod-dns",
+   "name": "coredns",
+   "region": "GRA11",
+   "attributes": {
+    "cpu_request_cores": 0.1,
+    "mem_request_gb": 0.07,
+    "k8s.namespace": "kube-system"
+   },
+   "labels": {},
+   "valid_from": "2026-09-01T00:00:00Z"
+  },
+  {
+   "id": "pod-mon",
+   "org_id": "org-golden",
+   "connector_id": "c-k8s",
+   "provider": "kubernetes",
+   "type": "k8s.pod",
+   "external_id": "pod-mon",
+   "name": "prometheus-0",
+   "region": "GRA11",
+   "attributes": {
+    "cpu_request_cores": 0.5,
+    "mem_request_gb": 2,
+    "k8s.namespace": "kube-system"
+   },
+   "labels": {},
+   "valid_from": "2026-09-01T00:00:00Z"
+  }
+ ],
+ "edges": [
+  {
+   "org_id": "org-golden",
+   "parent_id": "proj-shop",
+   "child_id": "vm-web-1",
+   "relation": "contains",
+   "valid_from": "2026-09-01T00:00:00Z"
+  },
+  {
+   "org_id": "org-golden",
+   "parent_id": "proj-shop",
+   "child_id": "vm-web-2",
+   "relation": "contains",
+   "valid_from": "2026-09-15T09:15:00Z"
+  },
+  {
+   "org_id": "org-golden",
+   "parent_id": "proj-shop",
+   "child_id": "vm-db",
+   "relation": "contains",
+   "valid_from": "2026-09-01T00:00:00Z"
+  },
+  {
+   "org_id": "org-golden",
+   "parent_id": "proj-data",
+   "child_id": "vm-lab",
+   "relation": "contains",
+   "valid_from": "2026-09-01T00:00:00Z"
+  },
+  {
+   "org_id": "org-golden",
+   "parent_id": "proj-shop",
+   "child_id": "vm-win",
+   "relation": "contains",
+   "valid_from": "2026-09-01T00:00:00Z"
+  },
+  {
+   "org_id": "org-golden",
+   "parent_id": "vm-db",
+   "child_id": "vol-db",
+   "relation": "attached_to",
+   "valid_from": "2026-09-01T00:00:00Z"
+  },
+  {
+   "org_id": "org-golden",
+   "parent_id": "proj-shop",
+   "child_id": "lb-1",
+   "relation": "contains",
+   "valid_from": "2026-09-01T00:00:00Z"
+  },
+  {
+   "org_id": "org-golden",
+   "parent_id": "proj-shop",
+   "child_id": "ip-1",
+   "relation": "contains",
+   "valid_from": "2026-09-01T00:00:00Z"
+  },
+  {
+   "org_id": "org-golden",
+   "parent_id": "vm-k8s-1",
+   "child_id": "node-1",
+   "relation": "backs",
+   "valid_from": "2026-09-01T00:00:00Z"
+  },
+  {
+   "org_id": "org-golden",
+   "parent_id": "vm-k8s-2",
+   "child_id": "node-2",
+   "relation": "backs",
+   "valid_from": "2026-09-01T00:00:00Z"
+  },
+  {
+   "org_id": "org-golden",
+   "parent_id": "node-1",
+   "child_id": "pod-shop-1",
+   "relation": "runs_on",
+   "valid_from": "2026-09-01T00:00:00Z"
+  },
+  {
+   "org_id": "org-golden",
+   "parent_id": "node-2",
+   "child_id": "pod-shop-2",
+   "relation": "runs_on",
+   "valid_from": "2026-09-15T10:00:00Z"
+  },
+  {
+   "org_id": "org-golden",
+   "parent_id": "node-2",
+   "child_id": "pod-search",
+   "relation": "runs_on",
+   "valid_from": "2026-09-01T00:00:00Z"
+  },
+  {
+   "org_id": "org-golden",
+   "parent_id": "node-1",
+   "child_id": "pod-dns",
+   "relation": "runs_on",
+   "valid_from": "2026-09-01T00:00:00Z"
+  },
+  {
+   "org_id": "org-golden",
+   "parent_id": "node-2",
+   "child_id": "pod-mon",
+   "relation": "runs_on",
+   "valid_from": "2026-09-01T00:00:00Z"
+  },
+  {
+   "org_id": "org-golden",
+   "parent_id": "ns-shop",
+   "child_id": "pod-shop-1",
+   "relation": "contains",
+   "valid_from": "2026-09-01T00:00:00Z"
+  },
+  {
+   "org_id": "org-golden",
+   "parent_id": "ns-shop",
+   "child_id": "pod-shop-2",
+   "relation": "contains",
+   "valid_from": "2026-09-15T10:00:00Z"
+  },
+  {
+   "org_id": "org-golden",
+   "parent_id": "ns-search",
+   "child_id": "pod-search",
+   "relation": "contains",
+   "valid_from": "2026-09-01T00:00:00Z"
+  },
+  {
+   "org_id": "org-golden",
+   "parent_id": "ns-sys",
+   "child_id": "pod-dns",
+   "relation": "contains",
+   "valid_from": "2026-09-01T00:00:00Z"
+  },
+  {
+   "org_id": "org-golden",
+   "parent_id": "ns-sys",
+   "child_id": "pod-mon",
+   "relation": "contains",
+   "valid_from": "2026-09-01T00:00:00Z"
+  }
+ ],
+ "catalogs": [
+  {
+   "catalog": {
+    "id": "cat-ovh",
+    "provider": "openstack",
+    "version": "ovh-2026-09",
+    "source": "public",
+    "currency": "EUR",
+    "valid_from": "2026-08-01T00:00:00Z",
+    "imported_at": "2026-08-01T00:00:00Z"
+   },
+   "items": [
+    {
+     "catalog_id": "",
+     "sku": "compute.flavor.b2-7",
+     "region": "",
+     "unit": "hour",
+     "price": "0.0681",
+     "currency": "EUR",
+     "attributes": {}
+    },
+    {
+     "catalog_id": "",
+     "sku": "compute.flavor.b2-15",
+     "region": "",
+     "unit": "hour",
+     "price": "0.1331",
+     "currency": "EUR",
+     "attributes": {}
+    },
+    {
+     "catalog_id": "",
+     "sku": "compute.flavor.b2-30",
+     "region": "",
+     "unit": "hour",
+     "price": "0.2651",
+     "currency": "EUR",
+     "attributes": {}
+    },
+    {
+     "catalog_id": "",
+     "sku": "storage.volume.classic",
+     "region": "",
+     "unit": "gb_month",
+     "price": "0.04",
+     "currency": "EUR",
+     "attributes": {}
+    },
+    {
+     "catalog_id": "",
+     "sku": "storage.volume.high-speed",
+     "region": "",
+     "unit": "gb_month",
+     "price": "0.08",
+     "currency": "EUR",
+     "attributes": {}
+    },
+    {
+     "catalog_id": "",
+     "sku": "storage.snapshot",
+     "region": "",
+     "unit": "gb_month",
+     "price": "0.01",
+     "currency": "EUR",
+     "attributes": {}
+    },
+    {
+     "catalog_id": "",
+     "sku": "network.ip.floating",
+     "region": "",
+     "unit": "hour",
+     "price": "0.0025",
+     "currency": "EUR",
+     "attributes": {}
+    },
+    {
+     "catalog_id": "",
+     "sku": "network.lb.small",
+     "region": "",
+     "unit": "hour",
+     "price": "0.0139",
+     "currency": "EUR",
+     "attributes": {}
+    },
+    {
+     "catalog_id": "",
+     "sku": "license.windows",
+     "region": "",
+     "unit": "vcpu_hour",
+     "price": "0.0125",
+     "currency": "EUR",
+     "attributes": {}
+    }
+   ]
+  }
+ ],
+ "onprem": [],
+ "adjustments": [
+  {
+   "id": "adj-disc",
+   "org_id": "org-golden",
+   "kind": "discount",
+   "name": "remise négociée",
+   "provider": "openstack",
+   "sku_pattern": "compute.flavor.*",
+   "percent": "5",
+   "currency": "EUR",
+   "valid_from": "2026-01-01T00:00:00Z",
+   "created_at": "2026-01-01T00:00:00Z"
+  }
+ ],
+ "rules": [
+  {
+   "id": "r-shop",
+   "org_id": "org-golden",
+   "node_id": "team-shop",
+   "name": "r-shop",
+   "priority": 10,
+   "enabled": true,
+   "conditions": [
+    {
+     "field": "label.team",
+     "op": "eq",
+     "value": "shop"
+    }
+   ],
+   "created_at": "2026-09-01T00:00:00Z"
+  },
+  {
+   "id": "r-search",
+   "org_id": "org-golden",
+   "node_id": "team-search",
+   "name": "r-search",
+   "priority": 20,
+   "enabled": true,
+   "conditions": [
+    {
+     "field": "label.team",
+     "op": "eq",
+     "value": "search"
+    }
+   ],
+   "created_at": "2026-09-01T00:00:00Z"
+  },
+  {
+   "id": "r-data",
+   "org_id": "org-golden",
+   "node_id": "team-data",
+   "name": "r-data",
+   "priority": 30,
+   "enabled": true,
+   "conditions": [
+    {
+     "field": "label.team",
+     "op": "regex",
+     "value": "^data"
+    }
+   ],
+   "created_at": "2026-09-01T00:00:00Z"
+  },
+  {
+   "id": "r-sys",
+   "org_id": "org-golden",
+   "node_id": "platform",
+   "name": "r-sys",
+   "priority": 40,
+   "enabled": true,
+   "conditions": [
+    {
+     "field": "attr.k8s.namespace",
+     "op": "in",
+     "values": [
+      "kube-system",
+      "monitoring"
+     ]
+    }
+   ],
+   "created_at": "2026-09-01T00:00:00Z"
+  }
+ ],
+ "shared_rules": [
+  {
+   "id": "s-platform",
+   "org_id": "org-golden",
+   "name": "plateforme partagée",
+   "source": [
+    {
+     "field": "attr.k8s.namespace",
+     "op": "eq",
+     "value": "kube-system"
+    }
+   ],
+   "method": "proportional",
+   "targets": [
+    {
+     "node_id": "team-shop",
+     "weight": "0"
+    },
+    {
+     "node_id": "team-search",
+     "weight": "0"
+    }
+   ],
+   "enabled": true,
+   "created_at": "2026-09-01T00:00:00Z"
+  }
+ ],
+ "billing": [],
+ "rates": {},
+ "metrics": {
+  "pod-shop-1": {
+   "cpu.usage_cores": [
+    0.6,
+    0.6,
+    0.6,
+    0.6,
+    0.6,
+    0.6,
+    0.6,
+    0.6,
+    0.6,
+    0.6,
+    0.6,
+    0.6,
+    0.6,
+    0.6,
+    0.6,
+    0.6,
+    0.6,
+    0.6,
+    0.6,
+    0.6,
+    0.6,
+    0.6,
+    0.6,
+    0.6
+   ],
+   "mem.usage_bytes": [
+    1610612736.0,
+    1610612736.0,
+    1610612736.0,
+    1610612736.0,
+    1610612736.0,
+    1610612736.0,
+    1610612736.0,
+    1610612736.0,
+    1610612736.0,
+    1610612736.0,
+    1610612736.0,
+    1610612736.0,
+    1610612736.0,
+    1610612736.0,
+    1610612736.0,
+    1610612736.0,
+    1610612736.0,
+    1610612736.0,
+    1610612736.0,
+    1610612736.0,
+    1610612736.0,
+    1610612736.0,
+    1610612736.0,
+    1610612736.0
+   ]
+  },
+  "pod-shop-2": {
+   "cpu.usage_cores": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    0.8,
+    0.8,
+    0.8,
+    0.8,
+    0.8,
+    0.8,
+    0.8,
+    0.8,
+    0.8,
+    0.8,
+    0.8,
+    0.8,
+    0.8,
+    0.8
+   ],
+   "mem.usage_bytes": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    1932735283.2,
+    1932735283.2,
+    1932735283.2,
+    1932735283.2,
+    1932735283.2,
+    1932735283.2,
+    1932735283.2,
+    1932735283.2,
+    1932735283.2,
+    1932735283.2,
+    1932735283.2,
+    1932735283.2,
+    1932735283.2,
+    1932735283.2
+   ]
+  },
+  "pod-search": {
+   "cpu.usage_cores": [
+    2.6,
+    2.6,
+    2.6,
+    2.6,
+    2.6,
+    2.6,
+    2.6,
+    2.6,
+    2.6,
+    2.6,
+    2.6,
+    2.6,
+    2.6,
+    2.6,
+    2.6,
+    2.6,
+    2.6,
+    2.6,
+    2.6,
+    2.6,
+    2.6,
+    2.6,
+    2.6,
+    2.6
+   ],
+   "mem.usage_bytes": [
+    5368709120,
+    5368709120,
+    5368709120,
+    5368709120,
+    5368709120,
+    5368709120,
+    5368709120,
+    5368709120,
+    5368709120,
+    5368709120,
+    5368709120,
+    5368709120,
+    5368709120,
+    5368709120,
+    5368709120,
+    5368709120,
+    5368709120,
+    5368709120,
+    5368709120,
+    5368709120,
+    5368709120,
+    5368709120,
+    5368709120,
+    5368709120
+   ]
+  },
+  "pod-dns": {
+   "cpu.usage_cores": [
+    0.02,
+    0.02,
+    0.02,
+    0.02,
+    0.02,
+    0.02,
+    0.02,
+    0.02,
+    0.02,
+    0.02,
+    0.02,
+    0.02,
+    0.02,
+    0.02,
+    0.02,
+    0.02,
+    0.02,
+    0.02,
+    0.02,
+    0.02,
+    0.02,
+    0.02,
+    0.02,
+    0.02
+   ],
+   "mem.usage_bytes": [
+    32212254.72,
+    32212254.72,
+    32212254.72,
+    32212254.72,
+    32212254.72,
+    32212254.72,
+    32212254.72,
+    32212254.72,
+    32212254.72,
+    32212254.72,
+    32212254.72,
+    32212254.72,
+    32212254.72,
+    32212254.72,
+    32212254.72,
+    32212254.72,
+    32212254.72,
+    32212254.72,
+    32212254.72,
+    32212254.72,
+    32212254.72,
+    32212254.72,
+    32212254.72,
+    32212254.72
+   ]
+  },
+  "pod-mon": {
+   "cpu.usage_cores": [
+    0.4,
+    0.4,
+    0.4,
+    0.4,
+    0.4,
+    0.4,
+    0.4,
+    0.4,
+    0.4,
+    0.4,
+    0.4,
+    0.4,
+    0.4,
+    0.4,
+    0.4,
+    0.4,
+    0.4,
+    0.4,
+    0.4,
+    0.4,
+    0.4,
+    0.4,
+    0.4,
+    0.4
+   ],
+   "mem.usage_bytes": [
+    3221225472,
+    3221225472,
+    3221225472,
+    3221225472,
+    3221225472,
+    3221225472,
+    3221225472,
+    3221225472,
+    3221225472,
+    3221225472,
+    3221225472,
+    3221225472,
+    3221225472,
+    3221225472,
+    3221225472,
+    3221225472,
+    3221225472,
+    3221225472,
+    3221225472,
+    3221225472,
+    3221225472,
+    3221225472,
+    3221225472,
+    3221225472
+   ]
+  }
+ },
+ "prior_credit": {}
+}

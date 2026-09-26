@@ -1,0 +1,228 @@
+{
+ "provider": "scaleway",
+ "version": "sample-2026-09",
+ "source": "sample",
+ "currency": "EUR",
+ "valid_from": "2025-01-01T00:00:00Z",
+ "note": "Grille d'exemple indicative (tarifs publics approximatifs). À remplacer par l'import officiel du fournisseur avant tout usage contractuel.",
+ "items": [
+  {
+   "sku": "compute.flavor.DEV1-S",
+   "unit": "hour",
+   "price": "0.0088",
+   "attributes": {
+    "vcpus": "2",
+    "ram_gb": "2",
+    "family": "dev"
+   }
+  },
+  {
+   "sku": "compute.flavor.DEV1-M",
+   "unit": "hour",
+   "price": "0.0198",
+   "attributes": {
+    "vcpus": "3",
+    "ram_gb": "4",
+    "family": "dev"
+   }
+  },
+  {
+   "sku": "compute.flavor.DEV1-L",
+   "unit": "hour",
+   "price": "0.042",
+   "attributes": {
+    "vcpus": "4",
+    "ram_gb": "8",
+    "family": "dev"
+   }
+  },
+  {
+   "sku": "compute.flavor.PLAY2-NANO",
+   "unit": "hour",
+   "price": "0.0147",
+   "attributes": {
+    "vcpus": "2",
+    "ram_gb": "4",
+    "family": "play"
+   }
+  },
+  {
+   "sku": "compute.flavor.PRO2-XXS",
+   "unit": "hour",
+   "price": "0.055",
+   "attributes": {
+    "vcpus": "2",
+    "ram_gb": "8",
+    "family": "pro"
+   }
+  },
+  {
+   "sku": "compute.flavor.PRO2-XS",
+   "unit": "hour",
+   "price": "0.11",
+   "attributes": {
+    "vcpus": "4",
+    "ram_gb": "16",
+    "family": "pro"
+   }
+  },
+  {
+   "sku": "compute.flavor.PRO2-S",
+   "unit": "hour",
+   "price": "0.219",
+   "attributes": {
+    "vcpus": "8",
+    "ram_gb": "32",
+    "family": "pro"
+   }
+  },
+  {
+   "sku": "compute.flavor.PRO2-M",
+   "unit": "hour",
+   "price": "0.438",
+   "attributes": {
+    "vcpus": "16",
+    "ram_gb": "64",
+    "family": "pro"
+   }
+  },
+  {
+   "sku": "compute.flavor.POP2-2C-8G",
+   "unit": "hour",
+   "price": "0.0735",
+   "attributes": {
+    "vcpus": "2",
+    "ram_gb": "8",
+    "family": "pop"
+   }
+  },
+  {
+   "sku": "compute.flavor.POP2-4C-16G",
+   "unit": "hour",
+   "price": "0.147",
+   "attributes": {
+    "vcpus": "4",
+    "ram_gb": "16",
+    "family": "pop"
+   }
+  },
+  {
+   "sku": "compute.flavor.POP2-8C-32G",
+   "unit": "hour",
+   "price": "0.29",
+   "attributes": {
+    "vcpus": "8",
+    "ram_gb": "32",
+    "family": "pop"
+   }
+  },
+  {
+   "sku": "storage.volume.b_ssd",
+   "unit": "gb_month",
+   "price": "0.08",
+   "attributes": {}
+  },
+  {
+   "sku": "storage.volume.sbs_5k",
+   "unit": "gb_month",
+   "price": "0.086",
+   "attributes": {}
+  },
+  {
+   "sku": "storage.volume.sbs_15k",
+   "unit": "gb_month",
+   "price": "0.11",
+   "attributes": {}
+  },
+  {
+   "sku": "storage.volume",
+   "unit": "gb_month",
+   "price": "0.08",
+   "attributes": {}
+  },
+  {
+   "sku": "storage.snapshot",
+   "unit": "gb_month",
+   "price": "0.035",
+   "attributes": {}
+  },
+  {
+   "sku": "storage.object.standard",
+   "unit": "gb_month",
+   "price": "0.0146",
+   "attributes": {}
+  },
+  {
+   "sku": "storage.object.glacier",
+   "unit": "gb_month",
+   "price": "0.002",
+   "attributes": {}
+  },
+  {
+   "sku": "network.ip.floating",
+   "unit": "hour",
+   "price": "0.004",
+   "attributes": {}
+  },
+  {
+   "sku": "network.lb.LB-S",
+   "unit": "hour",
+   "price": "0.0149",
+   "attributes": {}
+  },
+  {
+   "sku": "network.lb.LB-GP-M",
+   "unit": "hour",
+   "price": "0.0449",
+   "attributes": {}
+  },
+  {
+   "sku": "network.lb",
+   "unit": "hour",
+   "price": "0.0149",
+   "attributes": {}
+  },
+  {
+   "sku": "k8s.control_plane.free",
+   "unit": "hour",
+   "price": "0",
+   "attributes": {}
+  },
+  {
+   "sku": "k8s.control_plane.standard",
+   "unit": "hour",
+   "price": "0",
+   "attributes": {}
+  },
+  {
+   "sku": "k8s.control_plane.dedicated",
+   "unit": "hour",
+   "price": "0.137",
+   "attributes": {}
+  },
+  {
+   "sku": "k8s.control_plane.dedicated-4",
+   "unit": "hour",
+   "price": "0.11",
+   "attributes": {}
+  },
+  {
+   "sku": "k8s.control_plane.dedicated-8",
+   "unit": "hour",
+   "price": "0.18",
+   "attributes": {}
+  },
+  {
+   "sku": "k8s.control_plane.dedicated-16",
+   "unit": "hour",
+   "price": "0.35",
+   "attributes": {}
+  },
+  {
+   "sku": "k8s.control_plane.multicloud",
+   "unit": "hour",
+   "price": "0.1444",
+   "attributes": {}
+  }
+ ]
+}

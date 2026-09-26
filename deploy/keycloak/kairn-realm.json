@@ -1,0 +1,36 @@
+{
+  "realm": "kairn",
+  "enabled": true,
+  "displayName": "Kairn (développement)",
+  "sslRequired": "external",
+  "registrationAllowed": false,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "bruteForceProtected": true,
+  "clients": [
+    {
+      "clientId": "kairn",
+      "name": "Kairn",
+      "enabled": true,
+      "publicClient": false,
+      "secret": "kairn-dev-secret",
+      "protocol": "openid-connect",
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": false,
+      "attributes": { "pkce.code.challenge.method": "S256" },
+      "redirectUris": ["http://localhost:8080/api/v1/auth/oidc/callback", "http://localhost:3000/*"],
+      "webOrigins": ["http://localhost:3000"]
+    }
+  ],
+  "users": [
+    {
+      "username": "demo",
+      "email": "demo@kairn.local",
+      "emailVerified": true,
+      "firstName": "Démo",
+      "lastName": "Kairn",
+      "enabled": true,
+      "credentials": [{ "type": "password", "value": "demo", "temporary": false }]
+    }
+  ]
+}

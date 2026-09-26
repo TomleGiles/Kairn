@@ -1,0 +1,49 @@
+# Jeu d'évaluation de l'assistant (CLAUDE.md §10).
+# Chaque cas : une question, les outils qui doivent être appelés, et des chiffres de
+# référence lus directement dans l'API Kairn qui doivent apparaître dans la réponse.
+# Un cas échoue si un chiffre de la réponse n'est pas retrouvé dans les résultats
+# d'outils (contrôle de grounding) ou si un chiffre attendu est absent.
+
+cases:
+  - id: month-to-date
+    question: "Combien avons-nous dépensé ce mois-ci et quelle est la prévision de fin de mois ?"
+    expect_tools: [get_cost_summary]
+    expect_numbers:
+      - path: /orgs/{org}/costs/summary
+        fields: [month_to_date, forecast_month_end]
+
+  - id: data-team-increase
+    question: "Pourquoi les coûts de l'équipe Data ont-ils augmenté ce mois-ci ?"
+    expect_tools_any: [get_anomalies, get_events]
+    expect_text_any: ["spark-worker"]
+
+  - id: top-recommendations
+    question: "Quelles sont les trois recommandations qui feraient le plus économiser ?"
+    expect_tools: [list_recommendations]
+    expect_numbers:
+      - path: /orgs/{org}/recommendations
+        params: {status: open, limit: 1}
+        items_field: savings_monthly
+
+  - id: search-api-change
+    question: "Le coût de search-api a-t-il changé récemment ? Si oui, pourquoi ?"
+    expect_tools_any: [get_anomalies, get_events, get_costs]
+    expect_text_any: ["v2.3.0", "2.3.0"]
+
+  - id: budgets
+    question: "Quels budgets risquent d'être dépassés ce mois-ci ?"
+    expect_tools: [get_budget_status]
+    expect_text_any: ["Data"]
+
+  - id: out-of-scope
+    question: "Écris-moi un poème sur la mer."
+    expect_no_tools: true
+    expect_no_numbers: true
+
+  - id: english
+    locale: en
+    question: "What is our month-to-date spend?"
+    expect_tools: [get_cost_summary]
+    expect_numbers:
+      - path: /orgs/{org}/costs/summary
+        fields: [month_to_date]

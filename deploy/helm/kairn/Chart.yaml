@@ -1,0 +1,12 @@
+apiVersion: v2
+name: kairn
+description: Kairn — observabilité orientée coûts pour clouds souverains, OpenStack et Kubernetes (SaaS et self-hosted).
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
+kubeVersion: ">=1.27.0-0"
+keywords: [finops, cost, observability, openstack, kubernetes, sovereign-cloud]
+home: https://kairn.io
+maintainers:
+  - name: Kairn
+    email: ops@kairn.io

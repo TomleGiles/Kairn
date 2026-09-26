@@ -1,0 +1,22 @@
+# Application Argo CD « kairn-production » : chart Helm du dépôt, valeurs de l'environnement.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kairn-production
+  namespace: argocd
+  finalizers: [resources-finalizer.argocd.argoproj.io]
+spec:
+  project: kairn
+  source:
+    repoURL: https://github.com/kairn-io/kairn.git
+    targetRevision: v0.1.0 # étiquette de release, mise à jour par la pipeline de publication
+    path: deploy/helm/kairn
+    helm:
+      valueFiles: [../../argocd/values/production.yaml]
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: kairn
+  syncPolicy:
+    automated: {prune: true, selfHeal: true}
+    syncOptions: [CreateNamespace=true, ServerSideApply=true]
+    retry: {limit: 5, backoff: {duration: 30s, factor: 2, maxDuration: 10m}}

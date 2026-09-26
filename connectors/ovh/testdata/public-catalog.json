@@ -1,0 +1,1820 @@
+{
+ "catalogId": 9694,
+ "locale": {
+  "currencyCode": "EUR",
+  "subsidiary": "FR",
+  "taxRate": 20
+ },
+ "addons": [
+  {
+   "planCode": "b2-7.consumption",
+   "invoiceName": "b2-7",
+   "product": "publiccloud-instance",
+   "pricingType": "consumption",
+   "consumptionConfiguration": {
+    "billingStrategy": "ping",
+    "prorataUnit": "second",
+    "pingEndPolicy": "prorata"
+   },
+   "pricings": [
+    {
+     "phase": 0,
+     "capacities": [
+      "consumption"
+     ],
+     "commitment": 0,
+     "description": "hourly prices",
+     "interval": 1,
+     "intervalUnit": "hour",
+     "quantity": {
+      "min": 1,
+      "max": null
+     },
+     "repeat": {
+      "min": 1,
+      "max": null
+     },
+     "price": 7090000,
+     "formattedPrice": "0.07 €",
+     "tax": 1418000,
+     "mode": "default",
+     "strategy": "tiered",
+     "mustBeCompleted": false,
+     "type": "consumption",
+     "promotions": [],
+     "engagementConfiguration": null
+    }
+   ],
+   "family": null,
+   "blobs": {
+    "commercial": {
+     "brick": "guaranteed-resources",
+     "brickSubtype": "general-purpose",
+     "name": "b2-7",
+     "price": {
+      "interval": "PT1H",
+      "precision": 4,
+      "unit": "h"
+     }
+    },
+    "tags": [
+     "active"
+    ],
+    "technical": {
+     "bandwidth": {
+      "guaranteed": true,
+      "level": 250,
+      "unlimited": false
+     },
+     "cpu": {
+      "cores": 2,
+      "frequency": 2,
+      "model": "vCore",
+      "type": "vCore"
+     },
+     "memory": {
+      "size": 7
+     },
+     "name": "b2-7",
+     "os": {
+      "family": "linux"
+     },
+     "storage": {
+      "disks": [
+       {
+        "capacity": 50,
+        "iops": 2000,
+        "technology": "SSD"
+       }
+      ],
+      "raid": "local"
+     },
+     "vrack": {
+      "guaranteed": false,
+      "level": 300,
+      "unlimited": false
+     }
+    }
+   }
+  },
+  {
+   "planCode": "b2-7.monthly.postpaid",
+   "invoiceName": "b2-7",
+   "product": "publiccloud-instance",
+   "pricingType": "consumption",
+   "consumptionConfiguration": {
+    "billingStrategy": "ping",
+    "prorataUnit": "hour",
+    "pingEndPolicy": "prorata"
+   },
+   "pricings": [
+    {
+     "phase": 0,
+     "capacities": [
+      "consumption"
+     ],
+     "commitment": 0,
+     "description": "monthly prices",
+     "interval": 1,
+     "intervalUnit": "month",
+     "quantity": {
+      "min": 1,
+      "max": null
+     },
+     "repeat": {
+      "min": 1,
+      "max": null
+     },
+     "price": 2517000000,
+     "formattedPrice": "25.17 €",
+     "tax": 503400000,
+     "mode": "default",
+     "strategy": "tiered",
+     "mustBeCompleted": false,
+     "type": "consumption",
+     "promotions": [],
+     "engagementConfiguration": null
+    }
+   ],
+   "family": null,
+   "blobs": {
+    "commercial": {
+     "brick": "guaranteed-resources",
+     "brickSubtype": "general-purpose",
+     "name": "b2-7",
+     "price": {
+      "interval": "P1M"
+     }
+    },
+    "tags": [
+     "active"
+    ],
+    "technical": {
+     "bandwidth": {
+      "guaranteed": true,
+      "level": 250,
+      "unlimited": false
+     },
+     "cpu": {
+      "cores": 2,
+      "frequency": 2,
+      "model": "vCore",
+      "type": "vCore"
+     },
+     "memory": {
+      "size": 7
+     },
+     "name": "b2-7",
+     "os": {
+      "family": "linux"
+     },
+     "storage": {
+      "disks": [
+       {
+        "capacity": 50,
+        "iops": 2000,
+        "technology": "SSD"
+       }
+      ],
+      "raid": "local"
+     },
+     "vrack": {
+      "guaranteed": false,
+      "level": 300,
+      "unlimited": false
+     }
+    }
+   }
+  },
+  {
+   "planCode": "win-b2-7.consumption",
+   "invoiceName": "win-b2-7",
+   "product": "publiccloud-instance",
+   "pricingType": "consumption",
+   "consumptionConfiguration": {
+    "billingStrategy": "ping",
+    "prorataUnit": "second",
+    "pingEndPolicy": "prorata"
+   },
+   "pricings": [
+    {
+     "phase": 0,
+     "capacities": [
+      "consumption"
+     ],
+     "commitment": 0,
+     "description": "hourly prices",
+     "interval": 1,
+     "intervalUnit": "hour",
+     "quantity": {
+      "min": 1,
+      "max": null
+     },
+     "repeat": {
+      "min": 1,
+      "max": null
+     },
+     "price": 19070000,
+     "formattedPrice": "0.19 €",
+     "tax": 3814000,
+     "mode": "default",
+     "strategy": "tiered",
+     "mustBeCompleted": false,
+     "type": "consumption",
+     "promotions": [],
+     "engagementConfiguration": null
+    }
+   ],
+   "family": null,
+   "blobs": {
+    "commercial": {
+     "brick": "guaranteed-resources",
+     "brickSubtype": "general-purpose",
+     "name": "win-b2-7",
+     "price": {
+      "interval": "PT1H",
+      "precision": 4,
+      "unit": "h"
+     }
+    },
+    "tags": [
+     "active"
+    ],
+    "technical": {
+     "bandwidth": {
+      "guaranteed": true,
+      "level": 250,
+      "unlimited": false
+     },
+     "cpu": {
+      "cores": 2,
+      "frequency": 2,
+      "model": "vCore",
+      "type": "vCore"
+     },
+     "memory": {
+      "size": 7
+     },
+     "name": "win-b2-7",
+     "os": {
+      "family": "windows"
+     },
+     "storage": {
+      "disks": [
+       {
+        "capacity": 50,
+        "iops": 2000,
+        "technology": "SSD"
+       }
+      ],
+      "raid": "local"
+     },
+     "vrack": {
+      "guaranteed": false,
+      "level": 300,
+      "unlimited": false
+     }
+    }
+   }
+  },
+  {
+   "planCode": "b3-8.consumption",
+   "invoiceName": "b3-8",
+   "product": "publiccloud-instance",
+   "pricingType": "consumption",
+   "consumptionConfiguration": {
+    "billingStrategy": "ping",
+    "prorataUnit": "second",
+    "pingEndPolicy": "prorata"
+   },
+   "pricings": [
+    {
+     "phase": 0,
+     "capacities": [
+      "consumption"
+     ],
+     "commitment": 0,
+     "description": "hourly prices",
+     "interval": 1,
+     "intervalUnit": "hour",
+     "quantity": {
+      "min": 1,
+      "max": null
+     },
+     "repeat": {
+      "min": 1,
+      "max": null
+     },
+     "price": 5120000,
+     "formattedPrice": "0.05 €",
+     "tax": 1024000,
+     "mode": "default",
+     "strategy": "tiered",
+     "mustBeCompleted": false,
+     "type": "consumption",
+     "promotions": [],
+     "engagementConfiguration": null
+    }
+   ],
+   "family": null,
+   "blobs": {
+    "commercial": {
+     "brick": "guaranteed-resources",
+     "brickSubtype": "general-purpose",
+     "name": "b3-8",
+     "price": {
+      "interval": "PT1H",
+      "precision": 4,
+      "unit": "h"
+     }
+    },
+    "tags": [
+     "active",
+     "coming_soon",
+     "is_top",
+     "savings_plans"
+    ],
+    "technical": {
+     "bandwidth": {
+      "guaranteed": false,
+      "level": 500,
+      "unlimited": false
+     },
+     "cpu": {
+      "cores": 2,
+      "frequency": 2.3,
+      "model": "vCore",
+      "type": "vCore"
+     },
+     "memory": {
+      "size": 8
+     },
+     "name": "b3-8",
+     "os": {
+      "family": "linux"
+     },
+     "storage": {
+      "disks": [
+       {
+        "capacity": 50,
+        "number": 1,
+        "technology": "NVMe"
+       }
+      ],
+      "raid": "local"
+     },
+     "vrack": {
+      "guaranteed": false,
+      "level": 4000,
+      "unlimited": false
+     }
+    }
+   }
+  },
+  {
+   "planCode": "c3-32.consumption.3AZ",
+   "invoiceName": "c3-32",
+   "product": "publiccloud-instance",
+   "pricingType": "consumption",
+   "consumptionConfiguration": {
+    "billingStrategy": "ping",
+    "prorataUnit": "second",
+    "pingEndPolicy": "prorata"
+   },
+   "pricings": [
+    {
+     "phase": 0,
+     "capacities": [
+      "consumption"
+     ],
+     "commitment": 0,
+     "description": "hourly prices",
+     "interval": 1,
+     "intervalUnit": "hour",
+     "quantity": {
+      "min": 1,
+      "max": null
+     },
+     "repeat": {
+      "min": 1,
+      "max": null
+     },
+     "price": 36500000,
+     "formattedPrice": "0.36 €",
+     "tax": 7300000,
+     "mode": "default",
+     "strategy": "tiered",
+     "mustBeCompleted": false,
+     "type": "consumption",
+     "promotions": [],
+     "engagementConfiguration": null
+    }
+   ],
+   "family": null,
+   "blobs": {
+    "commercial": {
+     "brick": "guaranteed-resources",
+     "brickSubtype": "cpu",
+     "name": "c3-32",
+     "price": {
+      "interval": "PT1H",
+      "precision": 4,
+      "unit": "h"
+     }
+    },
+    "tags": [
+     "active",
+     "is_top",
+     "savings_plans",
+     "coming_soon"
+    ],
+    "technical": {
+     "bandwidth": {
+      "guaranteed": false,
+      "level": 2000,
+      "unlimited": false
+     },
+     "cpu": {
+      "cores": 16,
+      "frequency": 2.3,
+      "model": "vCore",
+      "type": "vCore"
+     },
+     "memory": {
+      "size": 32
+     },
+     "name": "c3-32",
+     "os": {
+      "family": "linux"
+     },
+     "storage": {
+      "disks": [
+       {
+        "capacity": 400,
+        "number": 1,
+        "technology": "NVMe"
+       }
+      ],
+      "raid": "local"
+     },
+     "vrack": {
+      "guaranteed": false,
+      "level": 4000,
+      "unlimited": false
+     }
+    }
+   }
+  },
+  {
+   "planCode": "d2-2.consumption",
+   "invoiceName": "d2-2",
+   "product": "publiccloud-instance",
+   "pricingType": "consumption",
+   "consumptionConfiguration": {
+    "billingStrategy": "ping",
+    "prorataUnit": "second",
+    "pingEndPolicy": "prorata"
+   },
+   "pricings": [
+    {
+     "phase": 0,
+     "capacities": [
+      "consumption"
+     ],
+     "commitment": 0,
+     "description": "hourly prices",
+     "interval": 1,
+     "intervalUnit": "hour",
+     "quantity": {
+      "min": 1,
+      "max": null
+     },
+     "repeat": {
+      "min": 1,
+      "max": null
+     },
+     "price": 1040000,
+     "formattedPrice": "0.01 €",
+     "tax": 208000,
+     "mode": "default",
+     "strategy": "tiered",
+     "mustBeCompleted": false,
+     "type": "consumption",
+     "promotions": [],
+     "engagementConfiguration": null
+    }
+   ],
+   "family": null,
+   "blobs": {
+    "commercial": {
+     "brick": "guaranteed-resources",
+     "brickSubtype": "discovery",
+     "name": "d2-2",
+     "price": {
+      "interval": "PT1H",
+      "precision": 4,
+      "unit": "h"
+     }
+    },
+    "tags": [
+     "active"
+    ],
+    "technical": {
+     "bandwidth": {
+      "guaranteed": false,
+      "level": 100,
+      "unlimited": false
+     },
+     "cpu": {
+      "cores": 1,
+      "frequency": 2,
+      "model": "vCore",
+      "type": "vCore"
+     },
+     "memory": {
+      "size": 2
+     },
+     "name": "d2-2",
+     "os": {
+      "family": "linux"
+     },
+     "storage": {
+      "disks": [
+       {
+        "capacity": 25,
+        "interface": "NVMe",
+        "number": 1
+       }
+      ],
+      "raid": "local"
+     },
+     "vrack": {
+      "guaranteed": false,
+      "level": 100,
+      "unlimited": false
+     }
+    }
+   }
+  },
+  {
+   "planCode": "volume.classic.consumption",
+   "invoiceName": "volume.classic",
+   "product": "publiccloud-volume-classic",
+   "pricingType": "consumption",
+   "consumptionConfiguration": {
+    "billingStrategy": "sum",
+    "prorataUnit": "second",
+    "pingEndPolicy": null
+   },
+   "pricings": [
+    {
+     "phase": 0,
+     "capacities": [
+      "consumption"
+     ],
+     "commitment": 0,
+     "description": "hourly prices",
+     "interval": 0,
+     "intervalUnit": "none",
+     "quantity": {
+      "min": 1,
+      "max": null
+     },
+     "repeat": {
+      "min": 1,
+      "max": null
+     },
+     "price": 5900,
+     "formattedPrice": "0.00 €",
+     "tax": 1180,
+     "mode": "default",
+     "strategy": "tiered",
+     "mustBeCompleted": false,
+     "type": "consumption",
+     "promotions": [],
+     "engagementConfiguration": null
+    }
+   ],
+   "family": null,
+   "blobs": {
+    "commercial": {
+     "brick": "volume",
+     "brickSubtype": "block storage",
+     "name": "volume.classic",
+     "price": {
+      "interval": "PT1H",
+      "precision": 6,
+      "unit": "GiB*h"
+     }
+    },
+    "tags": [
+     "active",
+     "forceEmpty_bandwidth"
+    ],
+    "technical": {
+     "name": "classic",
+     "volume": {
+      "capacity": {
+       "max": 12000
+      },
+      "iops": {
+       "guaranteed": true,
+       "level": 500
+      }
+     }
+    }
+   }
+  },
+  {
+   "planCode": "volume.high-speed-gen2.consumption",
+   "invoiceName": "volume.high-speed-gen2",
+   "product": "publiccloud-volume-high-speed-gen2",
+   "pricingType": "consumption",
+   "consumptionConfiguration": {
+    "billingStrategy": "sum",
+    "prorataUnit": "second",
+    "pingEndPolicy": null
+   },
+   "pricings": [
+    {
+     "phase": 0,
+     "capacities": [
+      "consumption"
+     ],
+     "commitment": 0,
+     "description": "hourly prices",
+     "interval": 0,
+     "intervalUnit": "none",
+     "quantity": {
+      "min": 1,
+      "max": null
+     },
+     "repeat": {
+      "min": 1,
+      "max": null
+     },
+     "price": 11900,
+     "formattedPrice": "0.00 €",
+     "tax": 2380,
+     "mode": "default",
+     "strategy": "tiered",
+     "mustBeCompleted": false,
+     "type": "consumption",
+     "promotions": [],
+     "engagementConfiguration": null
+    }
+   ],
+   "family": null,
+   "blobs": {
+    "commercial": {
+     "brick": "volume",
+     "brickSubtype": "block storage",
+     "name": "volume.high-speed-gen2",
+     "price": {
+      "interval": "PT1H",
+      "precision": 6,
+      "unit": "GiB*h"
+     }
+    },
+    "tags": [
+     "active"
+    ],
+    "technical": {
+     "bandwidth": {
+      "guaranteed": false,
+      "level": 0.5,
+      "max": 512,
+      "maxUnit": "MB/s",
+      "unit": "MB/s/GB"
+     },
+     "name": "high-speed-gen2",
+     "volume": {
+      "capacity": {
+       "max": 12000
+      },
+      "iops": {
+       "guaranteed": false,
+       "level": 30,
+       "max": 20000,
+       "maxUnit": "IOPS",
+       "unit": "IOPS/GB"
+      }
+     }
+    }
+   }
+  },
+  {
+   "planCode": "volume.classic.consumption.3AZ",
+   "invoiceName": "volume.classic",
+   "product": "publiccloud-volume-classic",
+   "pricingType": "consumption",
+   "consumptionConfiguration": {
+    "billingStrategy": "sum",
+    "prorataUnit": "second",
+    "pingEndPolicy": null
+   },
+   "pricings": [
+    {
+     "phase": 0,
+     "capacities": [
+      "consumption"
+     ],
+     "commitment": 0,
+     "description": "hourly prices",
+     "interval": 0,
+     "intervalUnit": "none",
+     "quantity": {
+      "min": 1,
+      "max": null
+     },
+     "repeat": {
+      "min": 1,
+      "max": null
+     },
+     "price": 5900,
+     "formattedPrice": "0.00 €",
+     "tax": 1180,
+     "mode": "default",
+     "strategy": "tiered",
+     "mustBeCompleted": false,
+     "type": "consumption",
+     "promotions": [],
+     "engagementConfiguration": null
+    }
+   ],
+   "family": null,
+   "blobs": {
+    "commercial": {
+     "brick": "volume",
+     "brickSubtype": "block storage",
+     "name": "volume.classic",
+     "price": {
+      "interval": "PT1H",
+      "precision": 6,
+      "unit": "GiB*h"
+     }
+    },
+    "tags": [
+     "active"
+    ],
+    "technical": {
+     "name": "classic",
+     "volume": {
+      "capacity": {
+       "max": 12000
+      },
+      "iops": {
+       "guaranteed": true,
+       "level": 500
+      }
+     }
+    }
+   }
+  },
+  {
+   "planCode": "volume.snapshot.consumption",
+   "invoiceName": "volume.snapshot",
+   "product": "publiccloud-volume-snapshot",
+   "pricingType": "consumption",
+   "consumptionConfiguration": {
+    "billingStrategy": "sum",
+    "prorataUnit": "second",
+    "pingEndPolicy": null
+   },
+   "pricings": [
+    {
+     "phase": 0,
+     "capacities": [
+      "consumption"
+     ],
+     "commitment": 0,
+     "description": "hourly prices",
+     "interval": 0,
+     "intervalUnit": "none",
+     "quantity": {
+      "min": 1,
+      "max": null
+     },
+     "repeat": {
+      "min": 1,
+      "max": null
+     },
+     "price": 5900,
+     "formattedPrice": "0.00 €",
+     "tax": 1180,
+     "mode": "default",
+     "strategy": "tiered",
+     "mustBeCompleted": false,
+     "type": "consumption",
+     "promotions": [],
+     "engagementConfiguration": null
+    }
+   ],
+   "family": null,
+   "blobs": {
+    "commercial": {
+     "brick": "volume",
+     "brickSubtype": "volume.snapshot",
+     "name": "volume.snapshot",
+     "price": {
+      "interval": "PT1H",
+      "precision": 6,
+      "unit": "GiB*h"
+     }
+    },
+    "tags": [
+     "active"
+    ]
+   }
+  },
+  {
+   "planCode": "snapshot.consumption",
+   "invoiceName": "snapshot",
+   "product": "publiccloud-snapshot",
+   "pricingType": "consumption",
+   "consumptionConfiguration": {
+    "billingStrategy": "sum",
+    "prorataUnit": "second",
+    "pingEndPolicy": null
+   },
+   "pricings": [
+    {
+     "phase": 0,
+     "capacities": [
+      "consumption"
+     ],
+     "commitment": 0,
+     "description": "hourly prices",
+     "interval": 0,
+     "intervalUnit": "none",
+     "quantity": {
+      "min": 1,
+      "max": null
+     },
+     "repeat": {
+      "min": 1,
+      "max": null
+     },
+     "price": 1500,
+     "formattedPrice": "0.00 €",
+     "tax": 300,
+     "mode": "default",
+     "strategy": "tiered",
+     "mustBeCompleted": false,
+     "type": "consumption",
+     "promotions": [],
+     "engagementConfiguration": null
+    }
+   ],
+   "family": null,
+   "blobs": {
+    "commercial": {
+     "brick": "volume",
+     "brickSubtype": "instance-backup",
+     "name": "snapshot",
+     "price": {
+      "interval": "PT1H",
+      "precision": 6,
+      "unit": "GiB*h"
+     }
+    },
+    "tags": [
+     "active"
+    ]
+   }
+  },
+  {
+   "planCode": "floatingip.floatingip.hour.consumption",
+   "invoiceName": "Public Cloud Floating IP",
+   "product": "publiccloud-floatingip-floatingip",
+   "pricingType": "consumption",
+   "consumptionConfiguration": {
+    "billingStrategy": "sum",
+    "prorataUnit": "second",
+    "pingEndPolicy": null
+   },
+   "pricings": [
+    {
+     "phase": 0,
+     "capacities": [
+      "consumption"
+     ],
+     "commitment": 0,
+     "description": "price for one hour",
+     "interval": 0,
+     "intervalUnit": "none",
+     "quantity": {
+      "min": 1,
+      "max": null
+     },
+     "repeat": {
+      "min": 1,
+      "max": null
+     },
+     "price": 270000,
+     "formattedPrice": "0.00 €",
+     "tax": 54000,
+     "mode": "default",
+     "strategy": "tiered",
+     "mustBeCompleted": false,
+     "type": "consumption",
+     "promotions": [],
+     "engagementConfiguration": null
+    }
+   ],
+   "family": null,
+   "blobs": {
+    "commercial": {
+     "brick": "floating-ips",
+     "brickSubtype": "floating-ips-standard",
+     "name": "Floating IP IPv4 (/32)",
+     "price": {
+      "interval": "PT1H",
+      "precision": 4
+     }
+    },
+    "tags": [
+     "active"
+    ]
+   }
+  },
+  {
+   "planCode": "floatingip.floatingip.month.consumption",
+   "invoiceName": "Public Cloud Floating IP",
+   "product": "publiccloud-floatingip-floatingip",
+   "pricingType": "consumption",
+   "consumptionConfiguration": {
+    "billingStrategy": "ping",
+    "prorataUnit": "hour",
+    "pingEndPolicy": "full"
+   },
+   "pricings": [
+    {
+     "phase": 0,
+     "capacities": [
+      "consumption"
+     ],
+     "commitment": 0,
+     "description": "price for one month",
+     "interval": 1,
+     "intervalUnit": "month",
+     "quantity": {
+      "min": 1,
+      "max": null
+     },
+     "repeat": {
+      "min": 1,
+      "max": null
+     },
+     "price": 180000000,
+     "formattedPrice": "1.80 €",
+     "tax": 36000000,
+     "mode": "default",
+     "strategy": "tiered",
+     "mustBeCompleted": false,
+     "type": "consumption",
+     "promotions": [],
+     "engagementConfiguration": null
+    }
+   ],
+   "family": null,
+   "blobs": {
+    "commercial": {
+     "brick": "floating-ips",
+     "brickSubtype": "floating-ips-standard",
+     "name": "Floating IP IPv4 (/32)",
+     "price": {
+      "interval": "P1M",
+      "precision": 2
+     }
+    },
+    "tags": []
+   }
+  },
+  {
+   "planCode": "publicip.ip.hour.consumption",
+   "invoiceName": "Public IPv4",
+   "product": "publiccloud-publicip-ip",
+   "pricingType": "consumption",
+   "consumptionConfiguration": {
+    "billingStrategy": "sum",
+    "prorataUnit": "second",
+    "pingEndPolicy": null
+   },
+   "pricings": [
+    {
+     "phase": 0,
+     "capacities": [
+      "consumption"
+     ],
+     "commitment": 0,
+     "description": "price for one hour",
+     "interval": 0,
+     "intervalUnit": "none",
+     "quantity": {
+      "min": 1,
+      "max": null
+     },
+     "repeat": {
+      "min": 1,
+      "max": null
+     },
+     "price": 0,
+     "formattedPrice": "0.00 €",
+     "tax": 0,
+     "mode": "default",
+     "strategy": "tiered",
+     "mustBeCompleted": false,
+     "type": "consumption",
+     "promotions": [],
+     "engagementConfiguration": null
+    }
+   ],
+   "family": null,
+   "blobs": {
+    "commercial": {
+     "brick": "Public IP",
+     "brickSubtype": null,
+     "name": "publicip.ip.hour",
+     "price": {
+      "interval": "PT1H",
+      "precision": 4,
+      "display": {
+       "value": "included"
+      }
+     }
+    },
+    "tags": [
+     "active"
+    ]
+   }
+  },
+  {
+   "planCode": "octavia-loadbalancer.loadbalancer-s.hour.consumption",
+   "invoiceName": "Octavia Loadbalancer - Small",
+   "product": "publiccloud-octavia-loadbalancer-loadbalancer-s",
+   "pricingType": "consumption",
+   "consumptionConfiguration": {
+    "billingStrategy": "sum",
+    "prorataUnit": "second",
+    "pingEndPolicy": null
+   },
+   "pricings": [
+    {
+     "phase": 0,
+     "capacities": [
+      "consumption"
+     ],
+     "commitment": 0,
+     "description": "price for one hour",
+     "interval": 0,
+     "intervalUnit": "none",
+     "quantity": {
+      "min": 1,
+      "max": null
+     },
+     "repeat": {
+      "min": 1,
+      "max": null
+     },
+     "price": 830000,
+     "formattedPrice": "0.01 €",
+     "tax": 166000,
+     "mode": "default",
+     "strategy": "tiered",
+     "mustBeCompleted": false,
+     "type": "consumption",
+     "promotions": [],
+     "engagementConfiguration": null
+    }
+   ],
+   "family": null,
+   "blobs": {
+    "commercial": {
+     "brick": "load-balancers",
+     "brickSubtype": "octavia-load-balancers",
+     "features": [
+      {
+       "name": "High Availability",
+       "value": "Yes"
+      },
+      {
+       "name": "TLS",
+       "value": "Yes"
+      }
+     ],
+     "name": "Load Balancer S",
+     "price": {
+      "interval": "PT1H",
+      "precision": 4
+     }
+    },
+    "tags": [
+     "active"
+    ],
+    "technical": {
+     "bandwidth": {
+      "level": 200
+     },
+     "connectionPerSeconds": {
+      "total": 250
+     },
+     "name": "small",
+     "requestPerSeconds": {
+      "total": 10000,
+      "unit": "req/s"
+     }
+    }
+   }
+  },
+  {
+   "planCode": "octavia-loadbalancer.loadbalancer-xl.hour.consumption",
+   "invoiceName": "Octavia Loadbalancer - XL",
+   "product": "publiccloud-octavia-loadbalancer-loadbalancer-xl",
+   "pricingType": "consumption",
+   "consumptionConfiguration": {
+    "billingStrategy": "sum",
+    "prorataUnit": "second",
+    "pingEndPolicy": null
+   },
+   "pricings": [
+    {
+     "phase": 0,
+     "capacities": [
+      "consumption"
+     ],
+     "commitment": 0,
+     "description": "price for one hour",
+     "interval": 0,
+     "intervalUnit": "none",
+     "quantity": {
+      "min": 1,
+      "max": null
+     },
+     "repeat": {
+      "min": 1,
+      "max": null
+     },
+     "price": 20830000,
+     "formattedPrice": "0.21 €",
+     "tax": 4166000,
+     "mode": "default",
+     "strategy": "tiered",
+     "mustBeCompleted": false,
+     "type": "consumption",
+     "promotions": [],
+     "engagementConfiguration": null
+    }
+   ],
+   "family": null,
+   "blobs": {
+    "commercial": {
+     "brick": "load-balancers",
+     "brickSubtype": "octavia-load-balancers",
+     "features": [
+      {
+       "name": "High Availability",
+       "value": "Yes"
+      },
+      {
+       "name": "TLS",
+       "value": "Yes"
+      }
+     ],
+     "name": "Load Balancer XL",
+     "price": {
+      "interval": "PT1H",
+      "precision": 4
+     }
+    },
+    "tags": [
+     "active"
+    ],
+    "technical": {
+     "bandwidth": {
+      "level": 4000
+     },
+     "connectionPerSeconds": {
+      "total": 2000
+     },
+     "name": "xl",
+     "requestPerSeconds": {
+      "total": 80000,
+      "unit": "req/s"
+     }
+    }
+   }
+  },
+  {
+   "planCode": "octavia-loadbalancer.loadbalancer-s.month.consumption",
+   "invoiceName": "Octavia Loadbalancer - Small",
+   "product": "publiccloud-octavia-loadbalancer-loadbalancer-s",
+   "pricingType": "consumption",
+   "consumptionConfiguration": {
+    "billingStrategy": "ping",
+    "prorataUnit": "hour",
+    "pingEndPolicy": "full"
+   },
+   "pricings": [
+    {
+     "phase": 0,
+     "capacities": [
+      "consumption"
+     ],
+     "commitment": 0,
+     "description": "price for one month",
+     "interval": 1,
+     "intervalUnit": "month",
+     "quantity": {
+      "min": 1,
+      "max": null
+     },
+     "repeat": {
+      "min": 1,
+      "max": null
+     },
+     "price": 600000000,
+     "formattedPrice": "6.00 €",
+     "tax": 120000000,
+     "mode": "default",
+     "strategy": "tiered",
+     "mustBeCompleted": false,
+     "type": "consumption",
+     "promotions": [],
+     "engagementConfiguration": null
+    }
+   ],
+   "family": null,
+   "blobs": {
+    "commercial": {
+     "brick": "load-balancers",
+     "brickSubtype": "octavia-load-balancers",
+     "features": [
+      {
+       "name": "High Availability",
+       "value": "Yes"
+      },
+      {
+       "name": "TLS",
+       "value": "Yes"
+      }
+     ],
+     "name": "Load Balancer S",
+     "price": {
+      "interval": "P1M",
+      "precision": 2
+     }
+    },
+    "tags": [],
+    "technical": {
+     "bandwidth": {
+      "level": 200
+     },
+     "connectionPerSeconds": {
+      "total": 250
+     },
+     "name": "small",
+     "requestPerSeconds": {
+      "total": 10000,
+      "unit": "req/s"
+     }
+    }
+   }
+  },
+  {
+   "planCode": "mks.standard.hour.consumption",
+   "invoiceName": "Managed Kubernetes Service - Standard (#REGION#)",
+   "product": "publiccloud-mks-standard",
+   "pricingType": "consumption",
+   "consumptionConfiguration": {
+    "billingStrategy": "sum",
+    "prorataUnit": "second",
+    "pingEndPolicy": null
+   },
+   "pricings": [
+    {
+     "phase": 0,
+     "capacities": [
+      "consumption"
+     ],
+     "commitment": 0,
+     "description": "price for one hour",
+     "interval": 0,
+     "intervalUnit": "none",
+     "quantity": {
+      "min": 1,
+      "max": null
+     },
+     "repeat": {
+      "min": 1,
+      "max": null
+     },
+     "price": 9000000,
+     "formattedPrice": "0.09 €",
+     "tax": 1800000,
+     "mode": "default",
+     "strategy": "tiered",
+     "mustBeCompleted": false,
+     "type": "consumption",
+     "promotions": [],
+     "engagementConfiguration": null
+    }
+   ],
+   "family": null,
+   "blobs": {
+    "commercial": {
+     "brick": "mks",
+     "brickSubtype": "mks-offer",
+     "name": "Standard",
+     "features": [
+      {
+       "name": "Localization",
+       "value": "1AZ"
+      }
+     ],
+     "price": {
+      "unit": "cluster*h",
+      "precision": 3,
+      "interval": "PT1H"
+     }
+    },
+    "tags": [
+     "active"
+    ],
+    "technical": {
+     "service": {
+      "sla": 99.99,
+      "etcdQuota": 8000
+     },
+     "nodes": {
+      "maximumSupportedNodes": 500
+     }
+    }
+   }
+  },
+  {
+   "planCode": "mks.free.hour.consumption",
+   "invoiceName": "Managed Kubernetes Service - Free (#REGION#)",
+   "product": "publiccloud-mks-free",
+   "pricingType": "consumption",
+   "consumptionConfiguration": {
+    "billingStrategy": "sum",
+    "prorataUnit": "second",
+    "pingEndPolicy": null
+   },
+   "pricings": [
+    {
+     "phase": 0,
+     "capacities": [
+      "consumption"
+     ],
+     "commitment": 0,
+     "description": "price for one hour",
+     "interval": 0,
+     "intervalUnit": "none",
+     "quantity": {
+      "min": 1,
+      "max": null
+     },
+     "repeat": {
+      "min": 1,
+      "max": null
+     },
+     "price": 0,
+     "formattedPrice": "0.00 €",
+     "tax": 0,
+     "mode": "default",
+     "strategy": "tiered",
+     "mustBeCompleted": false,
+     "type": "consumption",
+     "promotions": [],
+     "engagementConfiguration": null
+    }
+   ],
+   "family": null,
+   "blobs": {
+    "commercial": {
+     "brick": "mks",
+     "brickSubtype": "mks-offer",
+     "name": "Free",
+     "features": [
+      {
+       "name": "Localization",
+       "value": "1AZ"
+      }
+     ],
+     "price": {
+      "display": {
+       "value": "free"
+      }
+     }
+    },
+    "tags": [
+     "active"
+    ],
+    "technical": {
+     "service": {
+      "slo": 99.5,
+      "etcdQuota": 400
+     },
+     "nodes": {
+      "maximumSupportedNodes": 100
+     }
+    }
+   }
+  },
+  {
+   "planCode": "storage-standard.consumption",
+   "invoiceName": "storage-standard",
+   "product": "publiccloud-storage",
+   "pricingType": "consumption",
+   "consumptionConfiguration": {
+    "billingStrategy": "sum",
+    "prorataUnit": "hour",
+    "pingEndPolicy": null
+   },
+   "pricings": [
+    {
+     "phase": 0,
+     "capacities": [
+      "consumption"
+     ],
+     "commitment": 0,
+     "description": "hourly prices",
+     "interval": 0,
+     "intervalUnit": "none",
+     "quantity": {
+      "min": 1,
+      "max": null
+     },
+     "repeat": {
+      "min": 1,
+      "max": null
+     },
+     "price": 972,
+     "formattedPrice": "0.00 €",
+     "tax": 194,
+     "mode": "default",
+     "strategy": "tiered",
+     "mustBeCompleted": false,
+     "type": "consumption",
+     "promotions": [],
+     "engagementConfiguration": null
+    }
+   ],
+   "family": null,
+   "blobs": {
+    "commercial": {
+     "brick": "storage",
+     "brickSubtype": "Standard object storage - S3 API",
+     "name": "high-storage-replicated",
+     "price": {
+      "interval": "PT1H",
+      "precision": 8,
+      "unit": "GiB*h"
+     }
+    },
+    "tags": [
+     "active"
+    ]
+   }
+  },
+  {
+   "planCode": "storage-standard-3AZ.consumption",
+   "invoiceName": "storage-standard",
+   "product": "publiccloud-storage",
+   "pricingType": "consumption",
+   "consumptionConfiguration": {
+    "billingStrategy": "sum",
+    "prorataUnit": "hour",
+    "pingEndPolicy": null
+   },
+   "pricings": [
+    {
+     "phase": 0,
+     "capacities": [
+      "consumption"
+     ],
+     "commitment": 0,
+     "description": "hourly prices",
+     "interval": 0,
+     "intervalUnit": "none",
+     "quantity": {
+      "min": 1,
+      "max": 37376000
+     },
+     "repeat": {
+      "min": 1,
+      "max": null
+     },
+     "price": 1917,
+     "formattedPrice": "0.00 €",
+     "tax": 383,
+     "mode": "default",
+     "strategy": "tiered",
+     "mustBeCompleted": false,
+     "type": "consumption",
+     "promotions": [],
+     "engagementConfiguration": null
+    },
+    {
+     "phase": 0,
+     "capacities": [
+      "consumption"
+     ],
+     "commitment": 0,
+     "description": "hourly prices",
+     "interval": 0,
+     "intervalUnit": "none",
+     "quantity": {
+      "min": 37376001,
+      "max": 373760000
+     },
+     "repeat": {
+      "min": 1,
+      "max": null
+     },
+     "price": 1712,
+     "formattedPrice": "0.00 €",
+     "tax": 342,
+     "mode": "default",
+     "strategy": "tiered",
+     "mustBeCompleted": false,
+     "type": "consumption",
+     "promotions": [],
+     "engagementConfiguration": null
+    },
+    {
+     "phase": 0,
+     "capacities": [
+      "consumption"
+     ],
+     "commitment": 0,
+     "description": "hourly prices",
+     "interval": 0,
+     "intervalUnit": "none",
+     "quantity": {
+      "min": 373760001,
+      "max": null
+     },
+     "repeat": {
+      "min": 1,
+      "max": null
+     },
+     "price": 1506,
+     "formattedPrice": "0.00 €",
+     "tax": 301,
+     "mode": "default",
+     "strategy": "tiered",
+     "mustBeCompleted": false,
+     "type": "consumption",
+     "promotions": [],
+     "engagementConfiguration": null
+    }
+   ],
+   "family": null,
+   "blobs": {
+    "commercial": {
+     "brick": "storage",
+     "brickSubtype": "Standard object storage - S3 API - 3AZ",
+     "features": [
+      {
+       "name": "multi-az",
+       "value": "true"
+      }
+     ],
+     "name": "storage-standard-3AZ.consumption",
+     "price": {
+      "interval": "PT1H",
+      "precision": 8,
+      "unit": "GiB*h",
+      "display": {
+       "value": "free"
+      }
+     }
+    },
+    "tags": [
+     "active"
+    ]
+   }
+  },
+  {
+   "planCode": "storage-deep-archive.consumption",
+   "invoiceName": "storage-deep-archive",
+   "product": "publiccloud-storage",
+   "pricingType": "consumption",
+   "consumptionConfiguration": {
+    "billingStrategy": "sum",
+    "prorataUnit": "hour",
+    "pingEndPolicy": null
+   },
+   "pricings": [
+    {
+     "phase": 0,
+     "capacities": [
+      "consumption"
+     ],
+     "commitment": 0,
+     "description": "hourly prices",
+     "interval": 0,
+     "intervalUnit": "none",
+     "quantity": {
+      "min": 1,
+      "max": null
+     },
+     "repeat": {
+      "min": 1,
+      "max": null
+     },
+     "price": 228,
+     "formattedPrice": "0.00 €",
+     "tax": 45,
+     "mode": "default",
+     "strategy": "tiered",
+     "mustBeCompleted": false,
+     "type": "consumption",
+     "promotions": [],
+     "engagementConfiguration": null
+    }
+   ],
+   "family": null,
+   "blobs": null
+  },
+  {
+   "planCode": "bandwidth_instance_out.consumption",
+   "invoiceName": "bandwidth_instance_out",
+   "product": "publiccloud-bandwidth-instance-out",
+   "pricingType": "consumption",
+   "consumptionConfiguration": {
+    "billingStrategy": "sum",
+    "prorataUnit": "hour",
+    "pingEndPolicy": null
+   },
+   "pricings": [
+    {
+     "phase": 0,
+     "capacities": [
+      "consumption"
+     ],
+     "commitment": 0,
+     "description": "hourly prices",
+     "interval": 0,
+     "intervalUnit": "none",
+     "quantity": {
+      "min": 1,
+      "max": null
+     },
+     "repeat": {
+      "min": 1,
+      "max": null
+     },
+     "price": 0,
+     "formattedPrice": "0.00 €",
+     "tax": 0,
+     "mode": "default",
+     "strategy": "tiered",
+     "mustBeCompleted": false,
+     "type": "consumption",
+     "promotions": [],
+     "engagementConfiguration": null
+    }
+   ],
+   "family": null,
+   "blobs": {
+    "commercial": {
+     "brick": "bandwidth-instance",
+     "brickSubtype": null,
+     "name": "bandwidth-instance-out",
+     "price": {
+      "display": {
+       "value": "included"
+      },
+      "interval": "PT1H",
+      "precision": 4,
+      "unit": "GiB"
+     }
+    },
+    "tags": [
+     "active"
+    ]
+   }
+  },
+  {
+   "planCode": "gateway.s.hour.consumption",
+   "invoiceName": "Public Cloud Gateway Small",
+   "product": "publiccloud-gateway-s",
+   "pricingType": "consumption",
+   "consumptionConfiguration": {
+    "billingStrategy": "sum",
+    "prorataUnit": "second",
+    "pingEndPolicy": null
+   },
+   "pricings": [
+    {
+     "phase": 0,
+     "capacities": [
+      "consumption"
+     ],
+     "commitment": 0,
+     "description": "price for one hour",
+     "interval": 0,
+     "intervalUnit": "none",
+     "quantity": {
+      "min": 1,
+      "max": null
+     },
+     "repeat": {
+      "min": 1,
+      "max": null
+     },
+     "price": 280000,
+     "formattedPrice": "0.00 €",
+     "tax": 56000,
+     "mode": "default",
+     "strategy": "tiered",
+     "mustBeCompleted": false,
+     "type": "consumption",
+     "promotions": [],
+     "engagementConfiguration": null
+    }
+   ],
+   "family": null,
+   "blobs": {
+    "commercial": {
+     "brick": "gateway",
+     "brickSubtype": "gateway-standard",
+     "features": [
+      {
+       "name": "High Availability",
+       "value": "Yes"
+      },
+      {
+       "name": "SNAT (Outbound)",
+       "value": "Yes"
+      },
+      {
+       "name": "Floating IP Support (Inbound)",
+       "value": "Yes"
+      }
+     ],
+     "name": "Gateway S",
+     "price": {
+      "interval": "PT1H",
+      "precision": 4
+     }
+    },
+    "tags": [
+     "active"
+    ],
+    "technical": {
+     "bandwidth": {
+      "level": 200
+     },
+     "name": "s"
+    }
+   }
+  },
+  {
+   "planCode": "databases.cassandra-business-additionnal-storage-gb.month.consumption",
+   "invoiceName": "Monthly usage for Cassandra business additional GB Public Cloud Databases on region #REGION#",
+   "product": "publiccloud-databases-cassandra-business-additionnal-storage-gb",
+   "pricingType": "consumption",
+   "consumptionConfiguration": {
+    "billingStrategy": "ping",
+    "prorataUnit": "hour",
+    "pingEndPolicy": "full"
+   },
+   "pricings": [
+    {
+     "phase": 0,
+     "capacities": [
+      "consumption"
+     ],
+     "commitment": 0,
+     "description": "price for one month",
+     "interval": 1,
+     "intervalUnit": "month",
+     "quantity": {
+      "min": 1,
+      "max": null
+     },
+     "repeat": {
+      "min": 1,
+      "max": null
+     },
+     "price": 36000000,
+     "formattedPrice": "0.36 €",
+     "tax": 7200000,
+     "mode": "default",
+     "strategy": "tiered",
+     "mustBeCompleted": false,
+     "type": "consumption",
+     "promotions": [],
+     "engagementConfiguration": null
+    }
+   ],
+   "family": null,
+   "blobs": null
+  }
+ ]
+}
