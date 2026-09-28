@@ -6,6 +6,9 @@ const nextConfig: NextConfig = {
   trailingSlash: true,
   images: { unoptimized: true },
   poweredByHeader: false,
+  // Un layout racine par langue (groupes (fr) et (en)) : la page 404 est définie
+  // une seule fois dans app/global-not-found.tsx.
+  experimental: { globalNotFound: true },
 };
 
 export default nextConfig;
