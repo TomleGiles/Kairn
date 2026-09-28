@@ -55,7 +55,11 @@ export function ProductMock() {
                 </div>
                 <div className="flex h-36 items-end gap-1.5">
                   {days.map((d, i) => (
-                    <div key={i} className="flex flex-1 flex-col-reverse overflow-hidden rounded-t-sm" style={{ height: `${(d / max) * 100}%` }}>
+                    <div
+                      key={i}
+                      className="grow-bar flex flex-1 flex-col-reverse overflow-hidden rounded-t-sm"
+                      style={{ height: `${(d / max) * 100}%`, "--i": i } as React.CSSProperties}
+                    >
                       <div className="bg-teal-400" style={{ height: `${split[0] * 100}%` }} />
                       <div className="bg-indigo-400" style={{ height: `${split[1] * 100}%` }} />
                       <div className={i >= 14 ? "bg-amber-400" : "bg-sky-400"} style={{ height: `${split[2] * 100}%` }} />
@@ -84,6 +88,15 @@ export function ProductMock() {
             </div>
           </div>
         </div>
+      </div>
+      {/* Pastilles flottantes : ce que Kairn fait remonter de lui-même. */}
+      <div className="float absolute top-24 -left-6 hidden rounded-xl border border-white/10 bg-[#0e1520]/95 p-3 shadow-2xl shadow-black/40 backdrop-blur xl:block" aria-hidden="true">
+        <p className="text-[11px] text-slate-400">Recommandation acceptée</p>
+        <p className="text-sm font-semibold text-teal-300">−612 €/mois</p>
+      </div>
+      <div className="float-delayed absolute -right-8 bottom-24 hidden rounded-xl border border-white/10 bg-[#0e1520]/95 p-3 shadow-2xl shadow-black/40 backdrop-blur xl:block" aria-hidden="true">
+        <p className="text-[11px] text-slate-400">Corrélé automatiquement</p>
+        <p className="text-sm font-semibold text-indigo-300">Argo CD · etl-v2.3</p>
       </div>
       <figcaption className="mt-3 text-center text-xs text-ink-muted">Aperçu de l&apos;interface — données de démonstration.</figcaption>
     </figure>

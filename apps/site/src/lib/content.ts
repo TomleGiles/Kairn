@@ -220,3 +220,80 @@ export const faq = [
     a: "L'objectif est de connecter un premier cloud en moins de 10 minutes et de voir ses premiers coûts en moins d'une heure, historique compris quand la source le permet.",
   },
 ];
+
+// ---------------------------------------------------------------------------
+// Données de démonstration des illustrations (organisation fictive « Acme
+// Retail »). Les montants sont cohérents d'une section à l'autre : la facture
+// (48 214 €) se retrouve dans la répartition par équipe, la descente jusqu'au
+// pod et l'aperçu de l'interface. Chaque visuel est légendé comme illustratif.
+
+/** Lignes d'une facture cloud telle que le fournisseur la présente. */
+export const invoiceLines = [
+  { label: "Public Cloud — Instances", amount: "31 480,22 €" },
+  { label: "Public Cloud — Block Storage", amount: "9 912,40 €" },
+  { label: "Object Storage", amount: "4 715,38 €" },
+  { label: "Public Cloud — Load Balancer", amount: "2 106,00 €" },
+];
+export const invoiceTotal = "48 214,00 €";
+
+/** La même facture, allouée par équipe (part en %, arrondie). */
+export const teamCosts = [
+  { team: "Data", amount: "14 950 €", share: 31, color: "bg-teal-400", note: "+28 % · stockage (etl-v2.3)" },
+  { team: "Checkout", amount: "10 600 €", share: 22, color: "bg-indigo-400", note: "stable" },
+  { team: "Plateforme", amount: "8 680 €", share: 18, color: "bg-sky-400", note: "coûts partagés inclus" },
+  { team: "Search", amount: "6 750 €", share: 14, color: "bg-violet-400", note: "−4 %" },
+  { team: "Mobile", amount: "5 500 €", share: 11.4, color: "bg-emerald-400", note: "stable" },
+  { team: "Non alloué", amount: "1 734 €", share: 3.6, color: "bg-slate-500", note: "à attribuer" },
+];
+
+/** Descente de la facture jusqu'au pod, puis à l'équipe. */
+export const drilldown = [
+  {
+    level: "Facture",
+    name: "OVHcloud · septembre",
+    amount: "48 214 €",
+    share: 100,
+    source: "API de facturation",
+    detail: "Lignes de facture importées, rapprochées de l'estimation.",
+  },
+  {
+    level: "Projet",
+    name: "prod-eu",
+    amount: "29 870 €",
+    share: 62,
+    source: "API OpenStack",
+    detail: "VM, volumes, IP et load balancers du projet, tarifés.",
+  },
+  {
+    level: "Cluster Kubernetes",
+    name: "prod-gra7 · 12 nodes",
+    amount: "18 420 €",
+    share: 38,
+    source: "API Kubernetes",
+    detail: "Dont 2 310 € de capacité payée mais inutilisée (coût idle).",
+  },
+  {
+    level: "Node",
+    name: "k8s-node-07 · VM 16 vCPU, 64 Gio",
+    amount: "486 €",
+    share: 1,
+    source: "providerID → VM",
+    detail: "Le node est rattaché à la VM qui l'héberge, donc à son prix.",
+  },
+  {
+    level: "Pod",
+    name: "payment-api-7f9c · namespace checkout",
+    amount: "121 €",
+    share: 0.25,
+    source: "Prometheus",
+    detail: "Part du node selon max(requests, usage) : 4 vCPU réservés.",
+  },
+  {
+    level: "Équipe",
+    name: "Checkout · label team=checkout",
+    amount: "10 600 €",
+    share: 22,
+    source: "Règle d'allocation",
+    detail: "Tous ses pods, volumes et coûts partagés, refacturables.",
+  },
+];

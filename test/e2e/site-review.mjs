@@ -12,7 +12,9 @@ for (const v of [
   { name: "desktop-dark", viewport: { width: 1440, height: 900 }, scheme: "dark" },
   { name: "mobile-light", viewport: { width: 390, height: 844 }, scheme: "light" },
 ]) {
-  const ctx = await browser.newContext({ viewport: v.viewport, colorScheme: v.scheme, locale: "fr-FR" });
+  // Animations réduites : les révélations au défilement sont affichées dans leur
+  // état final, ce qui rend captures pleine page et contrôle de contraste fiables.
+  const ctx = await browser.newContext({ viewport: v.viewport, colorScheme: v.scheme, locale: "fr-FR", reducedMotion: "reduce" });
   const page = await ctx.newPage();
   const errors = [];
   page.on("pageerror", (e) => errors.push(e.message));
